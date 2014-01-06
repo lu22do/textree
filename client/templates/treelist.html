@@ -1,0 +1,20 @@
+<table>
+  <tr>
+    <th>Name</th>
+    <th>Description</th>
+    <th>Author</th>
+    <th>Date</th>
+    <th>Delete</th> 
+  </tr>
+  <% treecoll.each(function(tree) { %>
+  <tr>
+    <td><a href="#branch/<%= tree.get('rootBranch') %>"><%= tree.get('name') %></a></td>
+    <td><%= tree.get('description') %></td>
+    <td><%= tree.get('author').pseudo %></td>
+    <td><%= tree.get('date') %></td>
+    <td>
+      <input type="button" value="x" class="delete_button" treeid=<%= tree.get('_id') %>>
+    </td>
+  </tr>
+  <% }); %>
+</table>

@@ -1,0 +1,20 @@
+<h1>
+<%= model.pseudo %>
+<% if ( model.name.full.length > 1) { %>
+  (<%= model.name.full %>)
+<% } %>
+</h1>
+
+<% if ( !addButton ) { %>
+  <p><a href="#profile/<%= model.accountId %>">View</p>
+<% } %>
+
+<div class="actionarea">
+  <% if ( addButton ) { %>
+    <p><button class="addbutton">Add Contact</p>
+  <% } %>
+
+  <% if ( removeButton ) { %>
+    <p><button class="removebutton">Remove Contact</p>
+  <% } %>
+</div>

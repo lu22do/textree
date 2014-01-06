@@ -1,0 +1,37 @@
+<% if (parent) { %>
+<a href="#branch/<%= parent %>">Go to parent</a></li>
+<% } %>
+
+<p>
+<div>
+	<% if (parent) { %>
+	Title: <%= title %>
+	<% } else { %>
+	Root branch
+	<% } %>
+</div>
+
+<textarea id='branch_text' style='width: 100%' rows="20"><%= text %></textarea>
+
+<button id='save_branch_button'>Save edits</button>
+<span id='save_branch_done'>Done</span>
+
+<p>
+<% if (children.length) { %>
+Children branches:
+<ul id='children_branch_list'>
+  <% _.each(children, function(branchId) { %>
+  <li><a href="#branch/<%= branchId %>"><%= branchId %></a></li>
+  <% }); %>
+</ul>
+<% } %>
+
+<p>
+
+<form id='new_branch'>
+  <fieldset>
+    <legend>Add new child branch</legend>
+    <label>Title:<input type="text" name="title" /></label>
+    <input type="submit" value="Confirm" />
+  </fieldset>
+</form>
