@@ -5,8 +5,40 @@ body {
   color: black;
 }
 
+textarea, button, input {
+  font-family: Verdana, sans-serif;
+  font-size: 14px;
+}
+
 form {
   width: 400px;
+}
+
+.button {
+  background:-webkit-gradient( linear, left top, left bottom, color-stop(0.05, #ededed), color-stop(1, #dfdfdf) );
+  background:-moz-linear-gradient( center top, #ededed 5%, #dfdfdf 100% );
+  filter:progid:DXImageTransform.Microsoft.gradient(startColorstr='#ededed', endColorstr='#dfdfdf');
+  background-color:#ededed;
+  -webkit-border-radius:6px;
+  -moz-border-radius:6px;
+  border-radius:6px;
+  text-indent:0;
+  border:1px solid #dcdcdc;
+  display:inline-block;
+  color:black;
+  font-weight:  normal;
+  font-style:normal;
+  padding:1px 5px 2px 5px;
+  margin:1px 5px 2px 0;
+  text-decoration:none;
+  text-align:center;
+}
+
+.button:hover {
+  background:-webkit-gradient( linear, left top, left bottom, color-stop(0.05, #dfdfdf), color-stop(1, #ededed) );
+  background:-moz-linear-gradient( center top, #dfdfdf 5%, #ededed 100% );
+  filter:progid:DXImageTransform.Microsoft.gradient(startColorstr='#dfdfdf', endColorstr='#ededed');
+  background-color:#dfdfdf;
 }
 
 #content {
@@ -82,9 +114,4 @@ tr:nth-child(odd) {
 
 #save_branch_done {
   display: none;
-}
-
-textarea, button, input {
-  font-family: Verdana, sans-serif;
-  font-size: 14px;
 }

@@ -3,7 +3,7 @@ define(['text!templates/forgotpassword.html'], function(forgotpasswordTemplate) 
     el: $('#content'),
 
     events: {
-      'submit form': 'password'
+      'click #resetpwd_button': 'password'
     },
 
     password: function() {

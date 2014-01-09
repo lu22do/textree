@@ -2,7 +2,7 @@ define(['TextreeView', 'text!templates/treelist.html'],
 function(TextreeView, treelistTemplate) {
   var treelistView = TextreeView.extend({
     events: {
-      'click .delete_button': 'deleteTree'
+      'click #delete_button': 'deleteTree'
     },
     
     initialize: function() {
@@ -38,6 +38,7 @@ function(TextreeView, treelistTemplate) {
             alert('Could not delete tree');
         }
       });
+      return false;
     }
   });
 

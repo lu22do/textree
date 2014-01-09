@@ -13,7 +13,7 @@
     <td><%= tree.get('author').pseudo %></td>
     <td><%= tree.get('date') %></td>
     <td>
-      <input type="button" value="x" class="delete_button" treeid=<%= tree.get('_id') %>>
+      <a class="button" id="delete_button" href="" treeid=<%= tree.get('_id') %>>x</a>
     </td>
   </tr>
   <% }); %>
