@@ -7,8 +7,8 @@ define(['TextreeView', 'text!templates/contact.html'], function(TextreeView, con
     tagName: 'li',
 
     events: {
-      "click .addbutton": "addContact",
-      "click .removebutton": "removeContact"
+      'click .addbutton': 'addContact',
+      'click .removebutton': 'removeContact'
     },
 
     addContact: function() {

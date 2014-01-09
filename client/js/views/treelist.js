@@ -2,7 +2,7 @@ define(['TextreeView', 'text!templates/treelist.html'],
 function(TextreeView, treelistTemplate) {
   var treelistView = TextreeView.extend({
     events: {
-      "click .delete_button": "deleteTree"
+      'click .delete_button': 'deleteTree'
     },
     
     initialize: function() {
@@ -18,11 +18,11 @@ function(TextreeView, treelistTemplate) {
       this.$el.html(html);
     },
 
-    deleteTree: function(event, context) {
+    deleteTree: function(event /*, context*/) {
       var that = this;
       var treeId = event.target.getAttribute('treeid');
 
-      var model = this.collection.findWhere({_id: treeId})
+      var model = this.collection.findWhere({_id: treeId});
       this.collection.remove(model);
       
       $.ajax(
@@ -30,11 +30,12 @@ function(TextreeView, treelistTemplate) {
         {
           type: 'DELETE', 
           success: function() {
-            console.log("delete success");
+            console.log('delete success');
             //router.treelist();
             that.renderCollection(that.collection);
           },
-          error: function() {alert('Could not delete tree');
+          error: function() {
+            alert('Could not delete tree');
         }
       });
     }

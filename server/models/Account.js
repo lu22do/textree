@@ -56,7 +56,7 @@ module.exports = function(app, config, mongoose, nodemailer) {
   var registerCallback = function(err) {
     if (err) {
       return console.log(err);
-    };
+    }
     return console.log('Account was created');
   };
 
@@ -66,7 +66,7 @@ module.exports = function(app, config, mongoose, nodemailer) {
 
     var fullName = firstName;
     if (lastName.length > 0)
-        full += ' ' + lastName;
+        fullName += ' ' + lastName;
 
     console.log('Registering ' + email);
     var user = new Account({
@@ -84,7 +84,7 @@ module.exports = function(app, config, mongoose, nodemailer) {
   };
 
   var forgotPassword = function(email, resetPasswordUrl, callback) {
-    var user = Account.findOne({email: email}, function findAccount(err, doc) {
+    Account.findOne({email: email}, function findAccount(err, doc) {
       if (err) {
         callback(false);
       } 
@@ -103,7 +103,7 @@ module.exports = function(app, config, mongoose, nodemailer) {
           }
         });
       }
-    })
+    });
   };
 
   var changePassword = function(accountId, newpassword) {
@@ -111,7 +111,7 @@ module.exports = function(app, config, mongoose, nodemailer) {
     shaSum.update(newpassword);
     var hashedpassword = shaSum.digest('hex');
     Account.update({_id: accountId}, {$set: {password:hashedpassword}}, {upsert: false}, 
-      function changePasswordCallback(err) {
+      function changePasswordCallback(/*err*/) {
         console.log('Change password done for account' + accountId);
     });
   };
@@ -121,7 +121,7 @@ module.exports = function(app, config, mongoose, nodemailer) {
     shaSum.update(password);
     Account.findOne({email: email, password: shaSum.digest('hex')}, function(err, doc) {
       callback(doc);
-    })
+    });
   };
 
   var findById = function(accountId, callback) {
@@ -142,7 +142,7 @@ module.exports = function(app, config, mongoose, nodemailer) {
   };
 
   var addContact = function(account, addcontact) {
-    console.log("addcontact.name=" + addcontact.name);
+    console.log('addcontact.name=' + addcontact.name);
     var contact = {
       name: {first: addcontact.name.first, last: addcontact.name.last},
       accountId: addcontact._id,
@@ -159,10 +159,10 @@ module.exports = function(app, config, mongoose, nodemailer) {
   };
 
   var hasContact = function(account, contactId) {
-    if ( null == account.contacts ) return false;
+    if (null === account.contacts) return false;
 
     account.contacts.forEach(function(contact) {
-      if ( contact.accountId == contactId ) {
+      if (contact.accountId == contactId) {
         return true;
       }
     });
@@ -170,7 +170,7 @@ module.exports = function(app, config, mongoose, nodemailer) {
   };
 
   var removeContact = function(account, contactId) {
-    if ( null == account.contacts ) return;
+    if (null === account.contacts) return;
 
     account.contacts.forEach(function(contact) {
       if ( contact.accountId == contactId ) {
@@ -202,10 +202,10 @@ module.exports = function(app, config, mongoose, nodemailer) {
         cb(err);
       }
     });
-  }
+  };
 
   var addTree = function(account, tree, save) {
-    console.log("addTree.name=" + tree.name);
+    console.log('addTree.name=' + tree.name);
     account.trees.push(tree._id);
 
     if (save) {
@@ -218,7 +218,7 @@ module.exports = function(app, config, mongoose, nodemailer) {
   };
 
   var removeTree = function(account, treeId) {
-    if ( null == account.trees ) return;
+    if (null === account.trees) return;
 
     account.trees.forEach(function(tree) {
       if ( tree == treeId ) {
@@ -242,5 +242,5 @@ module.exports = function(app, config, mongoose, nodemailer) {
     addTree: addTree,
     removeTree: removeTree,
     Account: Account
-  }
-}
+  };
+};

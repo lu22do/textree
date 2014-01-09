@@ -4,7 +4,7 @@ define(['TextreeView', 'text!templates/createtree.html'],
     el: $('#content'),
     
     events: {
-      "submit #createtree_form": "createTree",
+      'submit #createtree_form': 'createTree',
     },
 
     createTree: function() {
@@ -17,7 +17,7 @@ define(['TextreeView', 'text!templates/createtree.html'],
         type: 'POST',
         data: data,
         success: function() {
-          console.log("create success");
+          console.log('create success');
           window.location.hash = '#index'; 
         },
         error: function() {

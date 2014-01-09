@@ -68,7 +68,7 @@ module.exports = function(app, config, mongoose) {
         }
         console.log('Tree created');
 
-        Branch.update({_id: rootBranch._id}, {tree: tree._id}, function(err, branch) {
+        Branch.update({_id: rootBranch._id}, {tree: tree._id}, function(err) {
           cb(err, tree);
         });
       });
@@ -117,7 +117,7 @@ module.exports = function(app, config, mongoose) {
           accountId: accountId
         }
       });
-      newbranch.save(function addBranchCb(err, newbranch, numberAffected) {
+      newbranch.save(function addBranchCb(err, newbranch /*, numberAffected*/) {
         branch.children.push(newbranch._id);
         branch.save(cb);
       });
@@ -131,11 +131,11 @@ module.exports = function(app, config, mongoose) {
     }
 
     // remove branch from parent
-    parent.children.remove(branchId);
+    parent.children.remove(branch._id);
     parent.save();
     
     // delete the branch itself
-    Branch.remove({_id: branchId}, function(err, doc) {
+    Branch.remove({_id: branch._id}, function(err) {
       if (cb) {
         cb(err);
       }
@@ -170,5 +170,5 @@ module.exports = function(app, config, mongoose) {
     deleteBranch: deleteBranch,
     findBranch: findBranch,
     Tree: Tree
-  }
-}
+  };
+};

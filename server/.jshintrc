@@ -1,0 +1,11 @@
+{
+  "node": true,
+  "validthis": true,
+  "strict": false,
+  "trailing": false,
+  "globals": {
+    "_": true,
+    "define": true,
+    "Backbone": true
+  }
+}

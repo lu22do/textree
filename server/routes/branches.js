@@ -9,28 +9,30 @@ module.exports = function(app, models) {
   app.post('/api/branches', function(req, res) {
     var accountId = req.session.accountId;
 
-    var parentId = req.param('parentId');
+    var parentId = req.param('parentId'); // parent branch to attach new branch to
     var title = req.param('title');
     var text = req.param('text');
 
-    if (null == parentId) {
+    if (null === parentId) {
       res.send(400);
       return;
     }
 
     models.Account.findById(accountId, function(account) {
       if (account) {
-        models.Tree.findById(branch.tree, function(tree) {
-          models.Tree.createBranch(parentId, title, text, account.pseudo, accountId, function(err, branch) {
-            if (err) {
-              console.log("Error creating branch: " + err);
-              res.send(404);
-            }
-            else  {
-              models.Account.createActivity(account, "BranchCreated", branch.title, branch._id, tree.name, tree._id, function(err) {
-                res.send(200);
-              });
-            }
+        models.Tree.findBranch(parentId, function(parentBranch) {
+          models.Tree.findById(parentBranch.tree, function(tree) {
+            models.Tree.createBranch(parentId, title, text, account.pseudo, accountId, function(err, branch) {
+              if (err) {
+                console.log('Error creating branch: ' + err);
+                res.send(404);
+              }
+              else  {
+                models.Account.createActivity(account, 'BranchCreated', branch.title, branch._id, tree.name, tree._id, function(/*err*/) {
+                  res.send(200);
+                });
+              }
+            });
           });
         });        
       }
@@ -41,7 +43,7 @@ module.exports = function(app, models) {
     var accountId = req.session.accountId;
     var branchId = req.param('id', null);     
   
-    if (null == branchId) {
+    if (null === branchId) {
       res.send(400);
       return;
     }
@@ -49,9 +51,9 @@ module.exports = function(app, models) {
     models.Account.findById(accountId, function(account) {
       models.Tree.findBranch(branchId, function(branch) {
         models.Tree.findById(branch.tree, function(tree) {
-          models.Tree.updateBranch(branchId, req.body, function(err) {
-            models.Account.createActivity(account, "BranchUpdated", branch.title, branch._id, 
-              tree.name, tree._id, function(err) {
+          models.Tree.updateBranch(branchId, req.body, function(/*err*/) {
+            models.Account.createActivity(account, 'BranchUpdated', branch.title, branch._id, 
+                                          tree.name, tree._id, function(/*err*/) {
               res.send(200);
             });
           });
@@ -61,18 +63,21 @@ module.exports = function(app, models) {
   });
 
   app.delete('/api/branches/:id', function(req, res) {
+    var accountId = req.session.accountId;
     var branchId = req.param('id', null);     
   
-    if (null == branchId) {
+    if (null === branchId) {
       res.send(400);
       return;
     }  
  
-    models.Tree.findBranch(branchId, function(branch) {
-      models.Tree.findById(branch.tree, function(tree) {
-        models.Branch.deleteBranch(branchId);
-        models.Account.createActivity(account, "BranchDeleted", branch.name, branchId, tree.name, tree._id, function(err) {
-          res.send(200);
+    models.Account.findById(accountId, function(account) { 
+      models.Tree.findBranch(branchId, function(branch) {
+        models.Tree.findById(branch.tree, function(tree) {
+          models.Branch.deleteBranch(branchId);
+          models.Account.createActivity(account, 'BranchDeleted', branch.name, branchId, tree.name, tree._id, function(/*err*/) {
+            res.send(200);
+          });
         });
       });
     });

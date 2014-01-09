@@ -44,7 +44,7 @@ module.exports = function(app, models) {
         treelist = undefined; 
       }
       models.Tree.findByIds(treelist, function(trees) {
-        res.send(trees)
+        res.send(trees);
       });
     });
 
@@ -58,7 +58,7 @@ module.exports = function(app, models) {
     var contactId = req.param('contactId');
 
    // Missing contactId, don't bother going any further
-    if ( null == contactId ) {
+    if (null === contactId) {
       res.send(400);
       return;
     }
@@ -87,14 +87,14 @@ module.exports = function(app, models) {
     var contactId = req.param('contactId', null);     
   
     // Missing contactId, don't bother going any further
-    if ( null == contactId ) {
+    if (null === contactId) {
       res.send(400);
       return;
     }  
  
     models.Account.findById(accountId, function(account) {
       if ( !account ) return;
-      models.Account.findById(contactId, function(contact,err) {
+      models.Account.findById(contactId, function(contact /*, err*/) {
         if ( !contact ) return;  
  
         models.Account.removeContact(account, contactId);
@@ -110,13 +110,13 @@ module.exports = function(app, models) {
 
   app.post('/api/contacts/find', function(req, res) {
     var searchStr = req.param('searchStr');
-    if (null == searchStr) {
+    if (null === searchStr) {
       res.send(400);
       return;
     }
 
     models.Account.findByString(searchStr, function onSearchDone(err, accounts) {
-      if (err || accounts.length == 0) {
+      if (err || accounts.length === 0) {
         res.send(404);
       } else {
         res.send(accounts);

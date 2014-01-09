@@ -3,7 +3,7 @@ define(['text!templates/register.html'], function(registerTemplate) {
     el: $('#content'),
     
     events:{
-      "submit form": "register"
+      'submit form': 'register'
     },
 
     register: function() {
@@ -14,10 +14,10 @@ define(['text!templates/register.html'], function(registerTemplate) {
         pseudo: $('input[name=pseudo]').val(),
         email: $('input[name=email]').val(),
         password: $('input[name=password]').val()
-      }, function(data) {
+      }, function() {
         window.location.hash = 'login';
       }).error(function(){
-        that.$el.html("Error registering");
+        that.$el.html('Error registering');
       });
       return false;
     },

@@ -1,0 +1,12 @@
+{
+  "devel": true, /* temp! */
+  "jquery": true,
+  "validthis": true,
+  "strict": false,
+  "trailing": false,
+  "globals": {
+    "_": true,
+    "define": true,
+    "Backbone": true
+  }
+}

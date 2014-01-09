@@ -5,7 +5,7 @@ define(['TextreeView', 'models/Contact', 'views/Contact', 'text!templates/addcon
     el: $('#content'),
 
     events: {
-      "submit form": "search"
+      'submit form': 'search'
     },
 
     initialize: function(options) {
@@ -18,8 +18,8 @@ define(['TextreeView', 'models/Contact', 'views/Contact', 'text!templates/addcon
         this.$('form').serialize(), function(data) {
         that.render(data);
       }).error(function(){
-        $("#results").text('No contacts found.');
-        $("#results").slideDown();
+        $('#results').text('No contacts found.');
+        $('#results').slideDown();
       });
       return false;
     },
@@ -28,7 +28,7 @@ define(['TextreeView', 'models/Contact', 'views/Contact', 'text!templates/addcon
       var that = this;
 
       this.$el.html(addcontactTemplate);
-      if ( null != resultList ) {
+      if (null !== resultList) {
         _.each(resultList, function (contactJson) {
           if (contactJson._id == that.router.loggedAccount._id) { // skip current account
             return;

@@ -18,7 +18,7 @@ module.exports = function(app, models) {
     var description = req.param('description');
 
    // Missing name, don't bother going any further
-    if ( null == name ) {
+    if (null === name) {
       res.send(400);
       return;
     }
@@ -27,10 +27,10 @@ module.exports = function(app, models) {
       if ( account ) {
         models.Tree.createTree(name, description, account.pseudo, accountId, function(err, tree) {
           if (err) {
-            return console.log("Error creating tree: " + err);
+            return console.log('Error creating tree: ' + err);
           }
           models.Account.addTree(account, tree, false);
-          models.Account.createActivity(account, "TreeCreated", tree.name, tree._id);
+          models.Account.createActivity(account, 'TreeCreated', tree.name, tree._id);
         });
       }
     });
@@ -45,7 +45,7 @@ module.exports = function(app, models) {
     var treeId = req.param('id', null);     
   
     // Missing treeId, don't bother going any further
-    if ( null == treeId ) {
+    if (null === treeId) {
       res.send(400);
       return;
     }  
@@ -58,7 +58,7 @@ module.exports = function(app, models) {
 
         models.Account.removeTree(account, treeId);
         models.Tree.deleteTree(treeId);
-        models.Account.createActivity(account, "TreeDeleted", tree.name, treeId);
+        models.Account.createActivity(account, 'TreeDeleted', tree.name, treeId);
       });
     });
  
@@ -67,7 +67,7 @@ module.exports = function(app, models) {
     res.send(200);
   });
 
-  app.post('/api/trees/find', function(req, res) {
+  app.post('/api/trees/find', function(/*req, res*/) {
 /*
     var searchStr = req.param('searchStr');
     if (null == searchStr) {

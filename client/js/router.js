@@ -1,9 +1,9 @@
 define(['TextreeView', 'views/index', 'views/register', 'views/login', 'views/forgotpassword', 'views/profile', 
-  'views/contacts', 'views/addcontact', 'views/createtree', 'views/treelist', 'views/topbar', 'views/branch',
-  'models/Account', 'models/ActivityCollection', 'models/ContactCollection', 'models/TreeCollection', 'models/Branch'],
+  'views/contacts', 'views/addcontact', 'views/createtree', 'views/treelist', 'views/topbar', 'views/branch', 'views/tree',
+  'models/Account', 'models/ActivityCollection', 'models/ContactCollection', 'models/Tree', 'models/TreeCollection', 'models/Branch'],
   function(TextreeView, IndexView, RegisterView, LoginView, ForgotPasswordView, ProfileView, ContactsView, AddContactView, 
-    CreateTreeView, TreeListView, TopbarView, BranchView,
-    Account, ActivityCollection, ContactCollection, TreeCollection, Branch) {
+    CreateTreeView, TreeListView, TopbarView, BranchView, TreeView,
+    Account, ActivityCollection, ContactCollection, Tree, TreeCollection, Branch) {
     var topbarView = new TopbarView();
 
     var Router = Backbone.Router.extend({
@@ -13,24 +13,24 @@ define(['TextreeView', 'views/index', 'views/register', 'views/login', 'views/fo
       socketEvents: _.extend({}, Backbone.Events),
 
       routes: {
-        "login": "login",
-        "register": "register",
-        "forgotpassword": "forgotpassword",
-        "logout": "logout",
+        'login': 'login',
+        'register': 'register',
+        'forgotpassword': 'forgotpassword',
+        'logout': 'logout',
 
         // with topbar links (extend TextreeView):
-        "index": "index",
-        "treelist": "treelist",
-        "createtree": "createtree",
-        "addcontact": "addcontact",
-        "profile/:id": "profile",
-        "contacts/:id": "contacts",
-        "tree/:id": "tree",
-        "branch/:id": "branch"
+        'index': 'index',
+        'treelist': 'treelist',
+        'createtree': 'createtree',
+        'addcontact': 'addcontact',
+        'profile/:id': 'profile',
+        'contacts/:id': 'contacts',
+        'tree/:id': 'tree',
+        'branch/:id': 'branch'
       },
 
       changeView: function(view, TopbarLink) {
-        if (null != this.currentView) {
+        if (null !== this.currentView) {
           this.currentView.undelegateEvents();
         }
         
@@ -51,7 +51,7 @@ define(['TextreeView', 'views/index', 'views/register', 'views/login', 'views/fo
           activityCollection: activityCollection,
           treeCollection: treeCollection,
           socketEvents: this.socketEvents
-        }), "index");
+        }), 'index');
         
         activityCollection.fetch();
         treeCollection.fetch({reset: true});
@@ -63,34 +63,34 @@ define(['TextreeView', 'views/index', 'views/register', 'views/login', 'views/fo
         this.changeView(new TreeListView({
           el: $('#content'),
           collection: treeCollection
-        }), "treelist");
+        }), 'treelist');
         treeCollection.fetch({reset: true});
       },
 
       createtree: function() {
-        this.changeView(new CreateTreeView(), "createtree");
+        this.changeView(new CreateTreeView(), 'createtree');
       },
 
       addcontact: function() {
-        this.changeView(new AddContactView({router: this}), "addcontact");
+        this.changeView(new AddContactView({router: this}), 'addcontact');
       },
 
       login: function() {
-        this.changeView(new LoginView({router: this}), "");
+        this.changeView(new LoginView({router: this}), '');
       },
 
       forgotpassword: function() {
-        this.changeView(new ForgotPasswordView(), "");
+        this.changeView(new ForgotPasswordView(), '');
       },
 
       logout: function() {
         $.post('/api/logout', {});
-        loggedAccount = null;
+        this.loggedAccount = null;
         window.location.hash = 'login';
       },
       
       register: function() {
-        this.changeView(new RegisterView(), "");
+        this.changeView(new RegisterView(), '');
       },
 
       profile: function(id) {
@@ -98,7 +98,7 @@ define(['TextreeView', 'views/index', 'views/register', 'views/login', 'views/fo
         this.changeView(new ProfileView({
           model: model,
           socketEvents: this.socketEvents
-        }), "myprofile");
+        }), 'myprofile');
         model.fetch();
       },
 
@@ -108,7 +108,7 @@ define(['TextreeView', 'views/index', 'views/register', 'views/login', 'views/fo
         contactsCollection.url = '/api/accounts/' + contactId + '/contacts';
         this.changeView(new ContactsView({
           collection: contactsCollection
-        }), "mycontacts");
+        }), 'mycontacts');
         contactsCollection.fetch({reset: true});
       },
 
@@ -116,7 +116,7 @@ define(['TextreeView', 'views/index', 'views/register', 'views/login', 'views/fo
         var model = new Tree({id: id});
         this.changeView(new TreeView({
           model: model
-        }), "tree");
+        }), 'tree');
         model.fetch();
       },
 
@@ -124,7 +124,7 @@ define(['TextreeView', 'views/index', 'views/register', 'views/login', 'views/fo
         var model = new Branch({id: id});
         this.changeView(new BranchView({
           model: model
-        }), "branch");
+        }), 'branch');
         model.fetch();
       },
     });

@@ -9,9 +9,7 @@ define(['TextreeView', 'text!templates/profile.html', 'text!templates/activity.h
     },
 
     postActivity: function() {
-      var that = this;
       var activityText = $('input[name=activity]').val();
-      var activityCollection = this.activityCollection;
       $.post('/accounts/' + this.model.get('_id') + '/activity', {activity: activityText});
       return false;
     },
@@ -34,7 +32,7 @@ define(['TextreeView', 'text!templates/profile.html', 'text!templates/activity.h
       this.$el.html(_.template(profileTemplate, this.model.toJSON()));
 
       var activityCollection = this.model.get('activity');
-      if (null != activityCollection) {
+      if (null !== activityCollection) {
         _.each(activityCollection, function(activityJson) {
           var activityModel = new Activity(activityJson);
           that.prependActivity(activityModel);

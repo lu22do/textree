@@ -5,12 +5,12 @@ define(['router'], function(router) {
 
   var checkLogin = function(callback) {
     $.ajax('/api/account/authenticated', {
-      type: "GET",
+      type: 'GET',
       success: function(data) {
         router.loggedAccount = data;
         return callback(true);
       },
-      error: function(data) {
+      error: function(/*data*/) {
         return callback(false);
       }
     });

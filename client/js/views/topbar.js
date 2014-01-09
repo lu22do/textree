@@ -3,33 +3,33 @@ define(['text!templates/topbar.html'], function(topbarTemplate) {
     el: $('#topbar ul'),
 
     events: {
-      "click li": "jump"
+      'click li': 'jump'
     },
 
     // from <li> id to links
     routes: {
-      "topbar_index": "#index",
-      "topbar_treelist": "#treelist",
-      "topbar_createtree": "#createtree", 
-      "topbar_myprofile": "#profile/me",
-      "topbar_mycontacts": "#contacts/me",
-      "topbar_logout": "#logout"
+      'topbar_index': '#index',
+      'topbar_treelist': '#treelist',
+      'topbar_createtree': '#createtree', 
+      'topbar_myprofile': '#profile/me',
+      'topbar_mycontacts': '#contacts/me',
+      'topbar_logout': '#logout'
     },
 
     currentHighlight: null, // topbar's highlighted link
 
     render: function(TopbarLink) { 
-      if (TopbarLink == "") {
+      if (TopbarLink === '') {
         this.$el.html('');
         this.currentHighlight = null;
       } 
       else {
-        if (this.currentHighlight == null) {
+        if (this.currentHighlight === null) {
           this.$el.html(topbarTemplate);
         } else {
-          $("#topbar_" + this.currentHighlight).removeClass("topbar_selected");          
+          $('#topbar_' + this.currentHighlight).removeClass('topbar_selected');          
         }
-        $("#topbar_" + TopbarLink).addClass("topbar_selected");
+        $('#topbar_' + TopbarLink).addClass('topbar_selected');
         this.currentHighlight = TopbarLink;
       }
     },
