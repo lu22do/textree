@@ -1,7 +1,22 @@
 module.exports = function(app, models) {
   app.get('/api/trees', function(req, res) {
-    models.Tree.findById(undefined, function(tree) {
-      res.send(tree);
+
+    var count, filter, exclude; 
+
+    if (req.query) {
+      if (req.query.count) {
+        count = parseInt(req.query.count);
+      }
+      filter = req.query.filter;
+      if (req.query.exclude) {
+        exclude = req.query.exclude == 'me' ?
+                  req.session.accountId :
+                  req.query.exclude;
+      }
+    }
+
+    models.Tree.findByIds(undefined, filter, count, exclude, function(trees) {
+      res.send(trees);
     });
   });
 
@@ -30,21 +45,42 @@ module.exports = function(app, models) {
             return console.log('Error creating tree: ' + err);
           }
           models.Account.addTree(account, tree, false);
-          models.Account.createActivity(account, 'TreeCreated', tree.name, tree._id);
+          models.Account.createActivity(account, 'TreeCreated', tree.name, tree._id, null, null, function(/*err*/) {
+            res.send(200);
+          });
         });
       }
     });
+  });
 
-    // Note: Not in callback - this endpoint returns immediately and
-    // processes in the background
-    res.send(200);
+  app.put('/api/trees/:id', function(req, res) {
+    var accountId = req.session.accountId;
+    var treeId = req.param('id', null);    
+
+    if (null === treeId) {
+      res.send(400);
+      return;
+    }  
+
+    var update = req.body;
+    update.updateDate = new Date();
+    console.log(JSON.stringify(update));
+
+    models.Account.findById(accountId, function(account) {
+      models.Tree.findById(treeId, function(tree) {
+        models.Tree.updateTree(tree._id, {$set: update}, function(/*err*/) {
+          models.Account.createActivity(account, 'TreeUpdated', tree.name, tree._id, null, null, function(/*err*/) {
+            res.send(200);
+          });
+        });
+      });
+    });
   });
 
   app.delete('/api/trees/:id', function(req, res) {
     var accountId = req.session.accountId;
     var treeId = req.param('id', null);     
   
-    // Missing treeId, don't bother going any further
     if (null === treeId) {
       res.send(400);
       return;

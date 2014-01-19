@@ -25,13 +25,17 @@ define(['text!templates/topbar.html'], function(topbarTemplate) {
       } 
       else {
         if (this.currentHighlight === null) {
-          this.$el.html(topbarTemplate);
+          this.$el.html(_.template(topbarTemplate, {loggedUser: this.loggedUser}));
         } else {
           $('#topbar_' + this.currentHighlight).removeClass('topbar_selected');          
         }
         $('#topbar_' + TopbarLink).addClass('topbar_selected');
         this.currentHighlight = TopbarLink;
       }
+    },
+
+    setLoggedUser: function(loggedUser) {
+      this.loggedUser = loggedUser;
     },
 
     jump: function(e) {

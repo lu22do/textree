@@ -11,17 +11,17 @@
 	<% } %>
 </div>
 
-<textarea id='branch_text' style='width: 100%' rows="20"><%= text %></textarea>
+<textarea id='branch_text' style='width: 100%' rows="10"><%= text %></textarea>
 
-<button id='save_branch_button'>Save edits</button>
+<a class="button" id="savebranch_button">Save Edits</a>
 <span id='save_branch_done'>Done</span>
 
 <p>
 <% if (children.length) { %>
 Children branches:
 <ul id='children_branch_list'>
-  <% _.each(children, function(branchId) { %>
-  <li><a href="#branch/<%= branchId %>"><%= branchId %></a></li>
+  <% _.each(children, function(branch) { %>
+  <li><a href="#branch/<%= branch._id %>"><%= branch.title %></a></li>
   <% }); %>
 </ul>
 <% } %>
@@ -32,6 +32,6 @@ Children branches:
   <fieldset>
     <legend>Add new child branch</legend>
     <label>Title:<input type="text" name="title" /></label>
-    <input type="submit" value="Confirm" />
+    <a class="button" id="createbranch_button">Confirm</a>
   </fieldset>
 </form>

@@ -5,7 +5,9 @@ function(TextreeView, treelistTemplate) {
       'click #delete_button': 'deleteTree'
     },
     
-    initialize: function() {
+    initialize: function(options) {
+      this.complete = options.complete;
+      this.withAuthor = options.withAuthor;
       this.collection.on('reset', this.renderCollection, this);
     },
 
@@ -14,31 +16,11 @@ function(TextreeView, treelistTemplate) {
     },
 
     renderCollection: function(collection) {
-      var html = _.template(treelistTemplate, {treecoll: collection});
+      var html = _.template(treelistTemplate, {
+        treecoll: collection, 
+        complete: this.complete, 
+        withAuthor: this.withAuthor});
       this.$el.html(html);
-    },
-
-    deleteTree: function(event /*, context*/) {
-      var that = this;
-      var treeId = event.target.getAttribute('treeid');
-
-      var model = this.collection.findWhere({_id: treeId});
-      this.collection.remove(model);
-      
-      $.ajax(
-        '/api/trees/' + treeId, 
-        {
-          type: 'DELETE', 
-          success: function() {
-            console.log('delete success');
-            //router.treelist();
-            that.renderCollection(that.collection);
-          },
-          error: function() {
-            alert('Could not delete tree');
-        }
-      });
-      return false;
     }
   });
 

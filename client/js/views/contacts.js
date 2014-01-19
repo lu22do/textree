@@ -13,8 +13,8 @@ function(TextreeView, ContactView, contactsTemplate) {
 
     renderCollection: function(collection) {
       collection.each(function(contact) {
-        var name = contact.get('name');
-        if (name) {
+        var pseudo = contact.get('pseudo');
+        if (pseudo) {
           var statusHtml = (new ContactView({removeButton: true, model: contact})).render().el;
           $(statusHtml).appendTo('.contacts_list');
         }

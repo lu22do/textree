@@ -1,8 +1,23 @@
 
 module.exports = function(app, models) {
   app.get('/api/branches/:id', function(req, res) {
-    models.Tree.findBranch(req.params.id, function(tree) {
-      res.send(tree);
+    models.Tree.findBranch(req.params.id, function(branch) {
+      res.send(branch);
+    });
+  });
+
+  app.get('/api/branches/:id/detailed', function(req, res) {
+    models.Tree.findBranch(req.params.id, function(branch) {
+      var len = branch.children.length;
+      if (0 === len) {
+        res.send(branch);
+      } 
+      else {
+        models.Tree.findBranches(branch.children, function(childBranches) {
+          branch.children = childBranches;
+          res.send(branch);
+        });
+      }
     });
   });
 
@@ -28,8 +43,13 @@ module.exports = function(app, models) {
                 res.send(404);
               }
               else  {
-                models.Account.createActivity(account, 'BranchCreated', branch.title, branch._id, tree.name, tree._id, function(/*err*/) {
-                  res.send(200);
+                models.Tree.updateTree(tree._id, {$set: {updateDate: new Date()}, $inc: {nbBranches: 1}}, function(err) {
+                  if (err) {
+                    console.log('updateTree error:' + err);
+                  }
+                  models.Account.createActivity(account, 'BranchCreated', branch.title, branch._id, tree.name, tree._id, function(/*err*/) {
+                    res.send(200);
+                  });
                 });
               }
             });
@@ -52,9 +72,11 @@ module.exports = function(app, models) {
       models.Tree.findBranch(branchId, function(branch) {
         models.Tree.findById(branch.tree, function(tree) {
           models.Tree.updateBranch(branchId, req.body, function(/*err*/) {
-            models.Account.createActivity(account, 'BranchUpdated', branch.title, branch._id, 
-                                          tree.name, tree._id, function(/*err*/) {
-              res.send(200);
+            models.Tree.updateTree(tree._id, {$set: {updateDate: new Date()}}, function(/*err*/) {
+              models.Account.createActivity(account, 'BranchUpdated', branch.title, branch._id, 
+                                            tree.name, tree._id, function(/*err*/) {
+                res.send(200);
+              });
             });
           });
         });
@@ -74,9 +96,11 @@ module.exports = function(app, models) {
     models.Account.findById(accountId, function(account) { 
       models.Tree.findBranch(branchId, function(branch) {
         models.Tree.findById(branch.tree, function(tree) {
-          models.Branch.deleteBranch(branchId);
-          models.Account.createActivity(account, 'BranchDeleted', branch.name, branchId, tree.name, tree._id, function(/*err*/) {
-            res.send(200);
+          models.Tree.updateTree(tree._id, {$set: {updateDate: new Date()}}, function(/*err*/) {
+            models.Branch.deleteBranch(branchId);
+            models.Account.createActivity(account, 'BranchDeleted', branch.name, branchId, tree.name, tree._id, function(/*err*/) {
+              res.send(200);
+            });
           });
         });
       });

@@ -14,7 +14,8 @@ define(['TextreeView', 'text!templates/index.html', 'views/activity', 'views/tre
       this.activityCollection.on('add', this.onActivityAdded, this);
       this.activityCollection.on('reset', this.onActivityCollectionReset, this);
 
-      this.treeCollection = options.treeCollection;
+      this.myTreeCollection = options.myTreeCollection;
+      this.otherTreeCollection = options.otherTreeCollection;
     },
 
     onActivityCollectionReset: function(collection) {
@@ -49,8 +50,17 @@ define(['TextreeView', 'text!templates/index.html', 'views/activity', 'views/tre
       this.$el.html(indexTemplate);
 
       new TreeListView({
-        el: $('#tree_list'),
-        collection: this.treeCollection
+        el: $('#my_tree_list'),
+        collection: this.myTreeCollection,
+        withAuthor: false,
+        complete: false
+      });
+
+      new TreeListView({
+        el: $('#other_tree_list'),
+        collection: this.otherTreeCollection,
+        withAuthor: true,
+        complete: false
       });
     }
   });

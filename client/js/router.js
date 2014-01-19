@@ -42,19 +42,24 @@ define(['TextreeView', 'views/index', 'views/register', 'views/login', 'views/fo
 
       index: function() {
         var activityCollection = new ActivityCollection();
-        activityCollection.url = '/api/accounts/me/activities';
+        activityCollection.url = '/api/accounts/me/activities?count=10';
 
-        var treeCollection = new TreeCollection();
-        treeCollection.url = '/api/accounts/me/trees';
+        var myTreeCollection = new TreeCollection();
+        myTreeCollection.url = '/api/accounts/me/trees?count=3&filter=lastUpdated';
+
+        var otherTreeCollection = new TreeCollection();
+        otherTreeCollection.url = '/api/trees?count=5&filter=lastUpdated&exclude=me';
 
         this.changeView(new IndexView({
           activityCollection: activityCollection,
-          treeCollection: treeCollection,
+          myTreeCollection: myTreeCollection,
+          otherTreeCollection: otherTreeCollection,
           socketEvents: this.socketEvents
         }), 'index');
         
         activityCollection.fetch();
-        treeCollection.fetch({reset: true});
+        myTreeCollection.fetch({reset: true});
+        otherTreeCollection.fetch({reset: true});
       },
 
       treelist: function() {
@@ -62,7 +67,9 @@ define(['TextreeView', 'views/index', 'views/register', 'views/login', 'views/fo
         treeCollection.url = '/api/accounts/me/trees';
         this.changeView(new TreeListView({
           el: $('#content'),
-          collection: treeCollection
+          collection: treeCollection,
+          complete: true,
+          withAuthor: false
         }), 'treelist');
         treeCollection.fetch({reset: true});
       },
@@ -98,7 +105,7 @@ define(['TextreeView', 'views/index', 'views/register', 'views/login', 'views/fo
         this.changeView(new ProfileView({
           model: model,
           socketEvents: this.socketEvents
-        }), 'myprofile');
+        }), id == 'me' ? 'myprofile' : 'mycontacts');
         model.fetch();
       },
 
@@ -122,11 +129,17 @@ define(['TextreeView', 'views/index', 'views/register', 'views/login', 'views/fo
 
       branch: function(id) {
         var model = new Branch({id: id});
+        model.url = '/api/branches/' + id + '/detailed';
         this.changeView(new BranchView({
           model: model
         }), 'branch');
         model.fetch();
       },
+
+      setLoggedAccount: function(la) {
+        this.loggedAccount = la;
+        topbarView.setLoggedUser(la.pseudo);
+      }
     });
 
     return new Router();

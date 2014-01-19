@@ -1,3 +1,42 @@
-<h1><%= name.first %> <%= name.last %></h1>
-<h2>Status Updates</h2>
-<ul class="status_list" />
+<h2><%= user.get('pseudo') %>'s profile</h2>
+<table>
+  <tr>
+    <td>Pseudo</td>
+    <td><%= user.get('pseudo') %></a></td>
+  </tr>
+  <tr>
+    <td>Email</td>
+    <td><%= user.get('email') %></td>
+  </tr>
+  <tr>
+    <td>Name</td>
+    <% var name = user.get('name'); var fullname = name ? name.full : ''; %>
+    <td><%= fullname %></td>
+  </tr>
+  <tr>
+    <td>Password</td>
+    <td id="password">
+      <a id="change_button" class="button">Change password</a>
+      <a id="submit_button" class="button" style="display:none">Submit</a>
+      <a id="cancel_button" class="button" style="display:none">Cancel</a>
+    </td>
+  </tr>
+  <tr>
+    <td>Trees</td>
+    <td>
+      <% var trees = user.get('trees'); nbTrees = trees ? trees.length : ''; %>
+      <a class="button" href="#treelist"><%= nbTrees %></a>
+    </td>
+  </tr>
+  <tr>
+    <td>Contacts</td>
+    <td>
+      <% var contacts = user.get('contacts'); nbContacts = contacts ? contacts.length : ''; %>
+      <a class="button" href="#contacts/me"><%= nbContacts %></a>
+    </td>
+  </tr>
+
+</table>
+
+<h2>Recent activity</h2>
+<div class="activity_list"></div>

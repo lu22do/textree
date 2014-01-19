@@ -4,8 +4,8 @@ define(['TextreeView', 'text!templates/branch.html' /*, 'models/Branch'*/],
     el: $('#content'),
 
     events: {
-      'click #save_branch_button': 'saveBranch',
-      'submit #new_branch': 'newBranch'
+      'click #savebranch_button': 'saveBranch',
+      'click #createbranch_button': 'newBranch'
     },
 
     initialize: function(/*options*/) {
@@ -43,6 +43,7 @@ define(['TextreeView', 'text!templates/branch.html' /*, 'models/Branch'*/],
           }
         }
       );
+      return false;
     },
 
     newBranch: function() {
@@ -55,7 +56,7 @@ define(['TextreeView', 'text!templates/branch.html' /*, 'models/Branch'*/],
       var that = this;
       $.post('/api/branches', {
         parentId: this.model.get('_id'),
-        title: $('input[name=title]').val(),
+        title: $('#new_branch input[name=title]').val(),
         text: ''
       }, function() {
         that.model.fetch();

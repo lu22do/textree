@@ -8,12 +8,6 @@ define(['TextreeView', 'text!templates/profile.html', 'text!templates/activity.h
       this.model.bind('change', this.render, this);
     },
 
-    postActivity: function() {
-      var activityText = $('input[name=activity]').val();
-      $.post('/accounts/' + this.model.get('_id') + '/activity', {activity: activityText});
-      return false;
-    },
-
     onSocketActivityAdded: function(data) {
       var newActivity = data.data;
       this.prependActivity(new Activity({activity: newActivity.activity, name: newActivity.name}));
@@ -29,9 +23,9 @@ define(['TextreeView', 'text!templates/profile.html', 'text!templates/activity.h
         this.socketEvents.bind('activity:' + this.model.get('_id'), this.onSocketActivityAdded, this);
       }
       var that = this;
-      this.$el.html(_.template(profileTemplate, this.model.toJSON()));
+      this.$el.html(_.template(profileTemplate, {user: this.model}));
 
-      var activityCollection = this.model.get('activity');
+      var activityCollection = this.model.get('activities');
       if (null !== activityCollection) {
         _.each(activityCollection, function(activityJson) {
           var activityModel = new Activity(activityJson);

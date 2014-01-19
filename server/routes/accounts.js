@@ -20,8 +20,16 @@ module.exports = function(app, models) {
     var accountId = req.params.id == 'me' ?
                     req.session.accountId :
                     req.params.id;
+    var count;
+    if (req.query && req.query.count) {
+      count = parseInt(req.query.count);
+    }
     models.Account.findById(accountId, function(account) {
-      res.send(account.activities);
+      if (count) {
+        res.send(account.activities.slice(account.activities.length - count));
+      } else {
+        res.send(account.activities);
+      }
     });
   });
 
@@ -38,12 +46,19 @@ module.exports = function(app, models) {
     var accountId = req.params.id == 'me' ?
                     req.session.accountId :
                     req.params.id;
+    var count, filter; 
+
+    if (req.query) {
+      count = req.query.count;
+      filter = req.query.filter; 
+    }
+
     models.Account.findById(accountId, function(account) {
       var treelist = account.trees;
       if (account.admin) {
         treelist = undefined; 
       }
-      models.Tree.findByIds(treelist, function(trees) {
+      models.Tree.findByIds(treelist, filter, count, undefined, function(trees) {
         res.send(trees);
       });
     });

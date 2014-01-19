@@ -1,20 +1,38 @@
-<table>
-  <tr>
-    <th>Name</th>
-    <th>Description</th>
-    <th>Author</th>
-    <th>Date</th>
-    <th>Delete</th> 
-  </tr>
-  <% treecoll.each(function(tree) { %>
-  <tr>
-    <td><a href="#branch/<%= tree.get('rootBranch') %>"><%= tree.get('name') %></a></td>
-    <td><%= tree.get('description') %></td>
-    <td><%= tree.get('author').pseudo %></td>
-    <td><%= tree.get('date') %></td>
-    <td>
-      <a class="button" id="delete_button" href="" treeid=<%= tree.get('_id') %>>x</a>
-    </td>
-  </tr>
-  <% }); %>
-</table>
+<% if (treecoll.length == 0) { %>
+No trees
+<% } else { %>
+  <table>
+    <tr>
+      <th>Name</th>
+      <th>Description</th>
+  <% if (withAuthor) { %>
+      <th>Author</th>
+  <% } %> 
+  <% if (complete) { %>
+      <th>Creation</th>
+      <th>Last update</th>
+      <th>Nb of branches</th>
+      <th>Details</th>
+  <% } %> 
+    </tr>
+    <% treecoll.each(function(tree) { %>
+    <tr>
+      <td><a href="#branch/<%= tree.get('rootBranch') %>"><%= tree.get('name') %></a></td>
+      <td><%= tree.get('description') %></td>
+  <% if (withAuthor) { %>
+      <td><%= tree.get('author').pseudo %></td>
+  <% } %> 
+  <% if (complete) { %>
+      <% var cdate = new Date(tree.get('date')); %>
+      <td><%= cdate.toLocaleDateString() + " " + cdate.toLocaleTimeString() %></td>
+      <% var udate = new Date(tree.get('updateDate')); %>
+      <td><%= udate.toLocaleDateString() + " " + udate.toLocaleTimeString() %></td>
+      <td><%= tree.get('nbBranches') %></td>
+      <td>
+        <a class="button" href="#tree/<%= tree.get('_id') %>">Details</a>
+      </td>
+  <% } %> 
+    </tr>
+    <% }); %>
+  </table>
+<% } %>

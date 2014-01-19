@@ -7,7 +7,7 @@ define(['router'], function(router) {
     $.ajax('/api/account/authenticated', {
       type: 'GET',
       success: function(data) {
-        router.loggedAccount = data;
+        router.setLoggedAccount(data);
         return callback(true);
       },
       error: function(/*data*/) {

@@ -1,6 +1,6 @@
 <h1>
 <%= model.pseudo %>
-<% if ( model.name.full.length > 1) { %>
+<% if ( model.name && model.name.full && model.name.full.length > 1) { %>
   (<%= model.name.full %>)
 <% } %>
 </h1>

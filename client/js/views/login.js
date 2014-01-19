@@ -13,7 +13,7 @@ define(['text!templates/login.html'], function(loginTemplate) {
     login: function() {
       var that = this;
       $.post('/api/login', this.$('form').serialize(), function(data) {
-        that.router.loggedAccount = data;
+        that.router.setLoggedAccount(data);
         window.location.hash = 'index';
       }).error(function(){
         $('#error').text('Unable to login.');

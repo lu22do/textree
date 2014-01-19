@@ -19,13 +19,14 @@ module.exports = function(app, config, mongoose, nodemailer) {
   };
 
   var ContactSchema = new Schema({
+    pseudo: String,
     name: {
       first: {type: String},
       last: {type: String}       
     },
     accountId: {type: Schema.ObjectId},
     added: {type: Date},
-    updated: {type: Date}
+    updated: {type: Date} /* ??? */
   }, schemaOptions);
 
   var AccountSchema = new Schema(
@@ -144,7 +145,10 @@ module.exports = function(app, config, mongoose, nodemailer) {
   var addContact = function(account, addcontact) {
     console.log('addcontact.name=' + addcontact.name);
     var contact = {
-      name: {first: addcontact.name.first, last: addcontact.name.last},
+      pseudo: addcontact.pseudo,
+      name: {
+        first: addcontact.name.first, 
+        last: addcontact.name.last},
       accountId: addcontact._id,
       added: new Date(),
       updated: new Date()

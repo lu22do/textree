@@ -23,7 +23,8 @@ module.exports = function(app, config, mongoose) {
       accountId: {type: Schema.ObjectId},
     },
     date: Date, // creation date
-    // updateDate: Date,
+    updateDate: Date,
+    nbBranches: Number, // not including root branch
     rootBranch: {type: Schema.ObjectId}
   });
 
@@ -51,6 +52,8 @@ module.exports = function(app, config, mongoose) {
 
       console.log('Rootbranch created');
 
+      var date = new Date();
+
       var tree = new Tree({
         name: name,
         description: description,
@@ -58,7 +61,9 @@ module.exports = function(app, config, mongoose) {
           pseudo: pseudo,
           accountId: accountId
         },
-        date: new Date(),
+        date: date,
+        updateDate: date,
+        nbBranches: 0,
         rootBranch: rootBranch._id
       });
       tree.save(function(err, tree) {
@@ -82,17 +87,34 @@ module.exports = function(app, config, mongoose) {
     });
   };
 
-  var findByIds = function(treeIds, callback) {
+  var findByIds = function(treeIds, filter, count, exclude, callback) {
     var query = {};
     if (treeIds) {
-      query = {_id: {$in: []}};
+      query._id = {$in: []};
       for (var i = 0; i < treeIds.length; i++) {
         query._id.$in.push(treeIds[i]);
       }
     }
-    Tree.find(query, function(err, doc) {
+    else if (exclude) {
+      query['author.accountId'] = {$ne: exclude};
+   //   query['author.pseudo'] = {$ne: "Ludi"};
+    }
+    var sorting;
+    if (filter && filter == 'lastUpdated') {
+      //query = {$query: query, $orderby: { updateDate: -1 } };
+      sorting = {updateDate: -1};
+    }
+    if (count === undefined) {
+      count = 0;
+    }
+    Tree.find(query).sort(sorting).limit(count).exec(function(err, doc) {
       callback(doc);
     });
+  };
+
+  var updateTree = function(treeId, update, cb) {
+    console.log('updateTree treeId=' + treeId + ', update: ' + JSON.stringify(update));
+    Tree.update({_id: treeId}, update, cb);
   };
 
   var deleteTree = function(treeId, cb) {
@@ -119,7 +141,9 @@ module.exports = function(app, config, mongoose) {
       });
       newbranch.save(function addBranchCb(err, newbranch /*, numberAffected*/) {
         branch.children.push(newbranch._id);
-        branch.save(cb);
+        branch.save(function(err) { 
+          cb(err, newbranch);
+        });
       });
     });
   };
@@ -143,6 +167,7 @@ module.exports = function(app, config, mongoose) {
   };
 
   var updateBranch = function(branchId, update, cb) {
+    console.log('updateBranch: ' + branchId + ' -> ' + update);
     Branch.update({_id: branchId}, {$set: update}, cb);
   };
 
@@ -155,7 +180,20 @@ module.exports = function(app, config, mongoose) {
   };
 
   var findBranch = function(branchId, callback) {
-    Branch.findOne({_id: branchId}, function(err, doc) {
+    Branch.findOne({_id: branchId}, null, {lean: true}, function(err, doc) {
+      callback(doc);
+    });
+  };
+
+  var findBranches = function(branchIds, callback) {
+    var query = {};
+    if (branchIds) {
+      query = {_id: {$in: []}};
+      for (var i = 0; i < branchIds.length; i++) {
+        query._id.$in.push(branchIds[i]);
+      }
+    }
+    Branch.find(query, null, {lean: true}, function(err, doc) {
       callback(doc);
     });
   };
@@ -164,11 +202,13 @@ module.exports = function(app, config, mongoose) {
     createTree: createTree,
     findById: findById,
     findByIds: findByIds,
+    updateTree: updateTree,
     deleteTree: deleteTree,
     createBranch: createBranch,
     updateBranch: updateBranch,    
     deleteBranch: deleteBranch,
     findBranch: findBranch,
+    findBranches: findBranches,
     Tree: Tree
   };
 };
