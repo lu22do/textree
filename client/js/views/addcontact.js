@@ -5,7 +5,7 @@ define(['TextreeView', 'models/Contact', 'views/Contact', 'text!templates/addcon
     el: $('#content'),
 
     events: {
-      'submit form': 'search'
+      'submit': 'search'
     },
 
     initialize: function(options) {
@@ -30,12 +30,21 @@ define(['TextreeView', 'models/Contact', 'views/Contact', 'text!templates/addcon
       this.$el.html(addcontactTemplate);
       if (null !== resultList) {
         _.each(resultList, function (contactJson) {
+          var addButton = true;
+
           if (contactJson._id == that.router.loggedAccount._id) { // skip current account
             return;
           }
+          
+          for (var i = 0; i < that.router.loggedAccount.contacts.length; i++) {
+            if (contactJson._id == that.router.loggedAccount.contacts[i].accountId) {
+              addButton = false;
+            }
+          }
+
           var contactModel = new Contact(contactJson);
-          var contactHtml = (new ContactView({ addButton: true, model: contactModel })).render().el;
-          $('#results').append(contactHtml);
+          var contactHtml = (new ContactView({ addButton: addButton, model: contactModel })).render().el;
+          $('#results_table').append(contactHtml);
         });
       }
     }

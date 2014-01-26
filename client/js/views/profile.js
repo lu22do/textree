@@ -5,7 +5,8 @@ define(['TextreeView', 'text!templates/profile.html', 'text!templates/activity.h
 
     initialize: function(options) {
       this.socketEvents = options.socketEvents;
-      this.model.bind('change', this.render, this);
+      this.router = options.router;
+      this.model.bind('change', this.renderModel, this);
     },
 
     onSocketActivityAdded: function(data) {
@@ -18,12 +19,19 @@ define(['TextreeView', 'text!templates/profile.html', 'text!templates/activity.h
       $(activityHtml).prependTo('.activity_list').hide().fadeIn('slow');
     },
 
-    render: function() {
+    render: function(argument) {
+    },
+
+    renderModel: function() {
+      var myprofile = false;
       if (this.model.get('_id')) {
         this.socketEvents.bind('activity:' + this.model.get('_id'), this.onSocketActivityAdded, this);
       }
+      if (this.model.get('_id') == this.router.loggedAccount._id) {
+        myprofile = true;
+      }
       var that = this;
-      this.$el.html(_.template(profileTemplate, {user: this.model}));
+      this.$el.html(_.template(profileTemplate, {user: this.model, myprofile: myprofile}));
 
       var activityCollection = this.model.get('activities');
       if (null !== activityCollection) {

@@ -22,7 +22,8 @@ module.exports = function(app, config, mongoose, nodemailer) {
     pseudo: String,
     name: {
       first: {type: String},
-      last: {type: String}       
+      last: {type: String},
+      full: {type: String}     
     },
     accountId: {type: Schema.ObjectId},
     added: {type: Date},
@@ -142,13 +143,21 @@ module.exports = function(app, config, mongoose, nodemailer) {
     }, callback);
   };
 
-  var addContact = function(account, addcontact) {
+  var addContact = function(account, addcontact, callback) {
     console.log('addcontact.name=' + addcontact.name);
+    for (var i = 0; i < account.contacts.length; i++) {
+      if (account.contacts[i].accountId.equals(addcontact._id)) {
+        callback(new Error('Already a contact'));
+        return;
+      }
+    }
     var contact = {
       pseudo: addcontact.pseudo,
       name: {
         first: addcontact.name.first, 
-        last: addcontact.name.last},
+        last: addcontact.name.last,
+        full: addcontact.name.full
+      },
       accountId: addcontact._id,
       added: new Date(),
       updated: new Date()
@@ -159,6 +168,7 @@ module.exports = function(app, config, mongoose, nodemailer) {
       if (err) {
         console.log('[addContact] Error saving account: ' + err);
       }
+      callback(err);
     });
   };
 
@@ -177,7 +187,7 @@ module.exports = function(app, config, mongoose, nodemailer) {
     if (null === account.contacts) return;
 
     account.contacts.forEach(function(contact) {
-      if ( contact.accountId == contactId ) {
+      if (contact.accountId == contactId) {
         account.contacts.remove(contact);
       }
     });

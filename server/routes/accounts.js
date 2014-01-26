@@ -81,18 +81,24 @@ module.exports = function(app, models) {
     models.Account.findById(accountId, function(account) {
       if ( account ) {
         models.Account.findById(contactId, function(contact) {
-          models.Account.addContact(account, contact);
-
-          // Make the reverse link
-          models.Account.addContact(contact, account);
-          account.save();
+          models.Account.addContact(account, contact, function(err) {
+            if  (err) {
+              res.send(424); // method failure
+              return;
+            }
+            // Make the reverse link
+            models.Account.addContact(contact, account, function(err){
+              if (err) {
+                res.send(424); // method failure
+              }
+              else {
+                res.send(200);
+              }
+            });
+          });
         });
       }
     });
-
-    // Note: Not in callback - this endpoint returns immediately and
-    // processes in the background
-    res.send(200);
   });
 
   app.delete('/api/accounts/:id/contact', function(req,res) {

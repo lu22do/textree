@@ -1,20 +1,26 @@
-<h1>
+<td>
 <%= model.pseudo %>
-<% if ( model.name && model.name.full && model.name.full.length > 1) { %>
-  (<%= model.name.full %>)
+<% if (model.name.full && model.name.full.length > 0) { %>
+(<%= model.name.full %>) 
 <% } %>
-</h1>
+</td>
 
-<% if ( !addButton ) { %>
-  <p><a href="#profile/<%= model.accountId %>">View</p>
+<td>
+<% if (!addButton) { %>
+<% if (!removeButton) { %>
+Already a contact
+<% } else { %>
+<a class="button" href="#profile/<%= model.accountId %>">View</a>
+<% } %>
 <% } %>
 
-<div class="actionarea">
-  <% if ( addButton ) { %>
-    <p><button class="addbutton">Add Contact</p>
-  <% } %>
+<% if (addButton) { %>
+<a class="button" id="addbutton">Add Contact</a>
+<% } %>
 
-  <% if ( removeButton ) { %>
-    <p><button class="removebutton">Remove Contact</p>
-  <% } %>
-</div>
+<% if (removeButton) { %>
+<a class="button" id="removebutton">Remove Contact</a>
+<% } %>
+
+<span id="actionarea"></span>
+</td>

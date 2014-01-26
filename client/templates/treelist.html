@@ -20,7 +20,7 @@ No trees
       <td><a href="#branch/<%= tree.get('rootBranch') %>"><%= tree.get('name') %></a></td>
       <td><%= tree.get('description') %></td>
   <% if (withAuthor) { %>
-      <td><%= tree.get('author').pseudo %></td>
+      <td><a href="#profile/<%= tree.get('author').accountId %>"><%= tree.get('author').pseudo %></a></td>
   <% } %> 
   <% if (complete) { %>
       <% var cdate = new Date(tree.get('date')); %>

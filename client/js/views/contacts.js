@@ -16,7 +16,7 @@ function(TextreeView, ContactView, contactsTemplate) {
         var pseudo = contact.get('pseudo');
         if (pseudo) {
           var statusHtml = (new ContactView({removeButton: true, model: contact})).render().el;
-          $(statusHtml).appendTo('.contacts_list');
+          $(statusHtml).appendTo('#contacts_list');
         }
       });
     }

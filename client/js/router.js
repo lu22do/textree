@@ -20,9 +20,9 @@ define(['TextreeView', 'views/index', 'views/register', 'views/login', 'views/fo
 
         // with topbar links (extend TextreeView):
         'index': 'index',
-        'treelist': 'treelist',
         'createtree': 'createtree',
         'addcontact': 'addcontact',
+        'treelist/:id': 'treelist',
         'profile/:id': 'profile',
         'contacts/:id': 'contacts',
         'tree/:id': 'tree',
@@ -62,15 +62,15 @@ define(['TextreeView', 'views/index', 'views/register', 'views/login', 'views/fo
         otherTreeCollection.fetch({reset: true});
       },
 
-      treelist: function() {
+      treelist: function(id) {
         var treeCollection = new TreeCollection();
-        treeCollection.url = '/api/accounts/me/trees';
+        treeCollection.url = '/api/accounts/' + id + '/trees';
         this.changeView(new TreeListView({
           el: $('#content'),
           collection: treeCollection,
           complete: true,
           withAuthor: false
-        }), 'treelist');
+        }), id == 'me' ? 'mytrees' : 'othertrees');
         treeCollection.fetch({reset: true});
       },
 
@@ -104,7 +104,8 @@ define(['TextreeView', 'views/index', 'views/register', 'views/login', 'views/fo
         var model = new Account({id: id});
         this.changeView(new ProfileView({
           model: model,
-          socketEvents: this.socketEvents
+          socketEvents: this.socketEvents,
+          router: this
         }), id == 'me' ? 'myprofile' : 'mycontacts');
         model.fetch();
       },

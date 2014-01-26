@@ -27,8 +27,9 @@ form {
   border:1px solid #dcdcdc;
   display:inline-block;
   color:black;
-  font-weight:  normal;
+  font-weight:normal;
   font-style:normal;
+  font-size: 90%;
   padding:1px 5px 2px 5px;
   margin:1px 5px 2px 0;
   text-decoration:none;
@@ -93,6 +94,15 @@ form {
   line-height: 40px;
   margin-left: 8px;
 }
+#topbar #version {
+  float: right;
+  min-width: 40px;
+  text-align: left;
+  font-size: 80%;
+  line-height: 60px;
+  margin-right: 8px;
+}
+
 
 table {
   max-width:800px;

@@ -1,18 +1,34 @@
-<h2><%= user.get('pseudo') %>'s profile</h2>
+<h2>
+<% if (myprofile) { %>
+My profile
+<% } else { %>
+<%= user.get('pseudo') %>'s profile
+<% } %>
+</h2>
 <table>
   <tr>
     <td>Pseudo</td>
     <td><%= user.get('pseudo') %></a></td>
   </tr>
+  
   <tr>
     <td>Email</td>
     <td><%= user.get('email') %></td>
   </tr>
+  
   <tr>
-    <td>Name</td>
-    <% var name = user.get('name'); var fullname = name ? name.full : ''; %>
-    <td><%= fullname %></td>
+    <td>First Name</td>
+    <% var name = user.get('name'); var firstname = name ? name.first : ''; %>
+    <td><%= firstname %></td>
   </tr>
+  
+  <tr>
+    <td>Last Name</td>
+    <% var name = user.get('name'); var lastname = name ? name.last : ''; %>
+    <td><%= lastname %></td>
+  </tr>
+  
+  <% if (myprofile) { %>
   <tr>
     <td>Password</td>
     <td id="password">
@@ -21,18 +37,29 @@
       <a id="cancel_button" class="button" style="display:none">Cancel</a>
     </td>
   </tr>
+  <% } %>
+
   <tr>
     <td>Trees</td>
     <td>
-      <% var trees = user.get('trees'); nbTrees = trees ? trees.length : ''; %>
-      <a class="button" href="#treelist"><%= nbTrees %></a>
+      <% var trees = user.get('trees'); var nbTrees = trees ? trees.length : 0; %>
+      <% if (myprofile) { %>
+      <a class="button" href="#treelist/me"><%= nbTrees %></a>
+      <% } else { %>
+      <a class="button" href="#treelist/<%= user.get('_id') %>"><%= nbTrees %></a>
+      <% } %>
     </td>
   </tr>
+
   <tr>
     <td>Contacts</td>
     <td>
       <% var contacts = user.get('contacts'); nbContacts = contacts ? contacts.length : ''; %>
+      <% if (myprofile) { %>
       <a class="button" href="#contacts/me"><%= nbContacts %></a>
+      <% } else { %>
+      <%= nbContacts %>
+      <% } %>
     </td>
   </tr>
 

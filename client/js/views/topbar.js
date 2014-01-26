@@ -9,7 +9,7 @@ define(['text!templates/topbar.html'], function(topbarTemplate) {
     // from <li> id to links
     routes: {
       'topbar_index': '#index',
-      'topbar_treelist': '#treelist',
+      'topbar_mytrees': '#treelist/me',
       'topbar_createtree': '#createtree', 
       'topbar_myprofile': '#profile/me',
       'topbar_mycontacts': '#contacts/me',
