@@ -1,27 +1,37 @@
-<% if (parent) { %>
-<a href="#branch/<%= parent %>">Go to parent</a></li>
+<% if (branch.parent) { %>
+<a href="#branch/<%= branch.parent %>">Go to parent</a></li>
 <% } %>
 
 <p>
 <div>
-	<% if (parent) { %>
-	Title: <%= title %>
+	<% if (branch.parent) { %>
+	Title: <%= branch.title %>
 	<% } else { %>
 	Root branch
 	<% } %>
 </div>
 
-<textarea id='branch_text' style='width: 100%' rows="10"><%= text %></textarea>
+<textarea id='branch_text' style='width: 100%' rows="8"><%= branch.text %></textarea>
+
+<% if (branch.author.accountId == loggedAccountId) { %>
+<a class="button" id="deletebranch_button">Delete this branch</a>
 
 <a class="button" id="savebranch_button">Save Edits</a>
 <span id='save_branch_done'>Done</span>
+<% } %>
 
 <p>
 <% if (children.length) { %>
 Children branches:
 <ul id='children_branch_list'>
-  <% _.each(children, function(branch) { %>
-  <li><a href="#branch/<%= branch._id %>"><%= branch.title %></a></li>
+  <% _.each(children, function(childbranch) { %>
+    <li><a href="#branch/<%= childbranch._id %>"><%= childbranch.title %></a>
+    <% if (childbranch.author.accountId != loggedAccountId) { %>
+    (by <%= childbranch.author.pseudo %>)
+    <% } else { %>
+    (by me)
+    <% } %>
+    </li>
   <% }); %>
 </ul>
 <% } %>
@@ -32,6 +42,8 @@ Children branches:
   <fieldset>
     <legend>Add new child branch</legend>
     <label>Title:<input type="text" name="title" /></label>
-    <a class="button" id="createbranch_button">Confirm</a>
+    <input class="button" type="submit" id="createbranch_button" value="Confirm">
   </fieldset>
 </form>
+
+<div id="popup"></div>

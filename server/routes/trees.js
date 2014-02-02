@@ -22,6 +22,11 @@ module.exports = function(app, models) {
 
   app.get('/api/trees/:id', function(req, res) {
     models.Tree.findById(req.params.id, function(tree) {
+      if (!tree) {
+        res.send(404);
+        return;
+      }
+      
       res.send(tree);
     });
   });
@@ -87,20 +92,39 @@ module.exports = function(app, models) {
     }  
  
     models.Account.findById(accountId, function(account) {
-      if ( !account ) return;
+      if (!account) {
+        res.send(500);
+        return;
+      }
  
       models.Tree.findById(treeId, function(tree) {
-        if ( !tree ) return;
+        if (!tree) {
+          res.send(500);
+          return;
+        }
 
-        models.Account.removeTree(account, treeId);
-        models.Tree.deleteTree(treeId);
-        models.Account.createActivity(account, 'TreeDeleted', tree.name, treeId);
+        models.Account.removeTree(account, treeId, function(err) {
+          if (err) {
+            res.send(500);
+            return;
+          }
+
+          models.Tree.deleteTree(treeId, function(err) {
+            if (err) {
+              res.send(500);
+              return;
+            }
+
+            models.Account.createActivity(account, 'TreeDeleted', tree.name, null, null, null, function(err) {
+              if (err) {
+                console.log(err);
+              }
+              res.send(200);
+            });
+          });
+        });
       });
     });
- 
-    // Note: Not in callback - this endpoint returns immediately and
-    // processes in the background
-    res.send(200);
   });
 
   app.post('/api/trees/find', function(/*req, res*/) {

@@ -119,10 +119,24 @@ module.exports = function(app, config, mongoose) {
 
   var deleteTree = function(treeId, cb) {
     console.log('deleteTree');
-    Tree.remove({_id: treeId}, function(err, doc) {
-      if (cb) {
-        cb(err, doc);
-      }
+
+    Tree.findOne({_id: treeId}, function(err, tree) {
+      Branch.findOne({_id: tree.rootBranch}, function(err, rootBranch) {
+        _deleteBranch(null, rootBranch, true, function(err) {
+          if (err) {
+            if (cb) {
+              cb(err);
+            }
+            return;          
+          }
+
+          Tree.remove({_id: treeId}, function(err, doc) {
+            if (cb) {
+              cb(err, doc);
+            }
+          });    
+        });
+      });
     });
   };
 
@@ -148,22 +162,51 @@ module.exports = function(app, config, mongoose) {
     });
   };
 
-  var _deleteBranch = function(parent, branch, cb) {
-    // remove children recursively
-    while (branch.children.length) {
-      _deleteBranch(branch, branch.children[0]);
+  var _deleteChildBranch = function(parent, branch, cb) {
+    if (branch.children.length) {
+      Branch.findOne({_id: branch.children[0]}, function(err, childBranch) {
+        _deleteBranch(branch, childBranch, true, function() {
+          _deleteChildBranch(parent, branch, cb);          
+        });
+      });
+    }      
+    else {
+      _deleteBranch(parent, branch, false, cb);
     }
+  };
 
-    // remove branch from parent
-    parent.children.remove(branch._id);
-    parent.save();
-    
-    // delete the branch itself
-    Branch.remove({_id: branch._id}, function(err) {
+  var _deleteBranch = function(parent, branch, deleteChildren, cb) {
+    if (deleteChildren) {
+      _deleteChildBranch(parent, branch, cb); // will callback this function when done
+      return;
+    }
+    else if (branch.children.length) {
       if (cb) {
-        cb(err);
+        cb(new Error('Has children'));
+        return;
       }
-    });
+    }    
+
+    if (parent) {
+      // remove branch from parent
+      parent.children.remove(branch._id);
+      parent.save(function(/*err*/) {
+        // delete the branch itself
+        Branch.remove({_id: branch._id}, function(err) {
+          if (cb) {
+            cb(err);
+          }
+        });
+      }); 
+    }
+    else {
+      // delete the branch itself
+      Branch.remove({_id: branch._id}, function(err) {
+        if (cb) {
+          cb(err);
+        }
+      });
+    }
   };
 
   var updateBranch = function(branchId, update, cb) {
@@ -171,10 +214,14 @@ module.exports = function(app, config, mongoose) {
     Branch.update({_id: branchId}, {$set: update}, cb);
   };
 
-  var deleteBranch = function(tree, branchId, cb) {
+  var deleteBranch = function(tree, branchId, deleteChildren, cb) {
     Branch.findOne({_id: branchId}, function(err, branch) {
+      if (branch.parent === null) {
+        cb(new Error('Cannot delete root branch'));
+        return;     
+      }
       Branch.findOne({_id: branch.parent}, function (err, parent) {
-        _deleteBranch(parent, branch, cb);
+        _deleteBranch(parent, branch, deleteChildren, cb);
       });
     });
   };

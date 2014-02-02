@@ -46,7 +46,7 @@ My profile
       <% if (myprofile) { %>
       <a class="button" href="#treelist/me"><%= nbTrees %></a>
       <% } else { %>
-      <a class="button" href="#treelist/<%= user.get('_id') %>"><%= nbTrees %></a>
+      <a class="button" href="#treelist/<%= user.get('_id') %>/<%= user.get('pseudo') %>"><%= nbTrees %></a>
       <% } %>
     </td>
   </tr>

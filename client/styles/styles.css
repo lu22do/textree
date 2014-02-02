@@ -131,6 +131,10 @@ tr:nth-child(odd) {
   display: none;
 }
 
+#deletebranch_button {
+  float: right;
+}
+
 #popup {
   display: none;
   border-radius:6px;

@@ -231,7 +231,7 @@ module.exports = function(app, config, mongoose, nodemailer) {
     }
   };
 
-  var removeTree = function(account, treeId) {
+  var removeTree = function(account, treeId, cb) {
     if (null === account.trees) return;
 
     account.trees.forEach(function(tree) {
@@ -239,7 +239,11 @@ module.exports = function(app, config, mongoose, nodemailer) {
         account.trees.remove(tree);
       }
     });
-    account.save();
+    account.save(function (err) {
+      if (cb) {
+        cb(err);
+      }
+    });
   };
 
   return {

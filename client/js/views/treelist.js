@@ -8,6 +8,7 @@ function(TextreeView, treelistTemplate) {
     initialize: function(options) {
       this.complete = options.complete;
       this.withAuthor = options.withAuthor;
+      this.ownertitle = options.ownertitle;
       this.collection.on('reset', this.renderCollection, this);
     },
 
@@ -19,6 +20,7 @@ function(TextreeView, treelistTemplate) {
       var html = _.template(treelistTemplate, {
         treecoll: collection, 
         complete: this.complete, 
+        ownertitle: this.ownertitle,
         withAuthor: this.withAuthor});
       this.$el.html(html);
     }

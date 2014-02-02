@@ -1,4 +1,4 @@
-define(['TextreeView', 'views/Popup', 'text!templates/tree.html'], 
+define(['TextreeView', 'views/popup', 'text!templates/tree.html'], 
        function(TextreeView, PopupView, treeTemplate) {
   var treeView = TextreeView.extend({
     el: $('#content'),
@@ -95,7 +95,6 @@ define(['TextreeView', 'views/Popup', 'text!templates/tree.html'],
             description: $('input[name=desc]').val(),
           }, 
           success: function() {
-            console.log('update success');
           },
           error: function() {
             alert('Could not create tree');
@@ -111,8 +110,7 @@ define(['TextreeView', 'views/Popup', 'text!templates/tree.html'],
         {
           type: 'DELETE', 
           success: function() {
-            console.log('delete success');
-            window.location.hash = 'treelist';
+            window.location.hash = 'treelist/me';
           },
           error: function() {
             alert('Could not delete tree');
@@ -123,7 +121,7 @@ define(['TextreeView', 'views/Popup', 'text!templates/tree.html'],
     deleteTreePopup: function() {
       var that = this;
       if (!this.popup) {
-        this.popup = new PopupView({el: $('#popup'), cb: function() {
+        this.popup = new PopupView({el: $('#popup'), text: 'Are you sure?', confirmButtons: true, cb: function() {
             that.deleteTree.apply(that);
           }});
       }

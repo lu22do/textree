@@ -23,6 +23,7 @@ define(['TextreeView', 'views/index', 'views/register', 'views/login', 'views/fo
         'createtree': 'createtree',
         'addcontact': 'addcontact',
         'treelist/:id': 'treelist',
+        'treelist/:id/:authorpseudo': 'treelist',
         'profile/:id': 'profile',
         'contacts/:id': 'contacts',
         'tree/:id': 'tree',
@@ -62,15 +63,16 @@ define(['TextreeView', 'views/index', 'views/register', 'views/login', 'views/fo
         otherTreeCollection.fetch({reset: true});
       },
 
-      treelist: function(id) {
+      treelist: function(id, authorpseudo) {
         var treeCollection = new TreeCollection();
         treeCollection.url = '/api/accounts/' + id + '/trees';
         this.changeView(new TreeListView({
           el: $('#content'),
           collection: treeCollection,
           complete: true,
-          withAuthor: false
-        }), id == 'me' ? 'mytrees' : 'othertrees');
+          withAuthor: false,
+          ownertitle: authorpseudo
+        }), id == 'me' ? 'mytrees' : 'mycontacts');
         treeCollection.fetch({reset: true});
       },
 
@@ -130,9 +132,10 @@ define(['TextreeView', 'views/index', 'views/register', 'views/login', 'views/fo
 
       branch: function(id) {
         var model = new Branch({id: id});
-        model.url = '/api/branches/' + id + '/detailed';
+        model.url = '/api/branches/' + id;
         this.changeView(new BranchView({
-          model: model
+          model: model,
+          router: this
         }), 'branch');
         model.fetch();
       },
