@@ -4,6 +4,9 @@
   "version": "0.0.1",
   "author": "lu22do",
   "private": true,
+  "scripts": {
+    "start": "node ./app"
+  },
   "dependencies": {
     "express": "~3.4.8",
     "jade": "~1.1.5",
