@@ -40,7 +40,7 @@ var models = {
 app.configure(function() {
   app.sessionSecret = 'textree secret key';
   app.set('view engine', 'jade');
-  app.use(express.static(__dirname + '/../client'));
+  app.use(express.static(__dirname + '/client'));
   app.use(express.limit('1mb'));
   app.use(express.bodyParser());
   app.use(express.cookieParser("textree secret key"));
