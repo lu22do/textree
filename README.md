@@ -1,22 +1,24 @@
-<h1>Overview</h1>
-This is the server and client sofware for a textual tree website.
-A tree is made of pieces texts. 
-Starting with the root text, each text is linked to other texts through branches.
+# Overview
+This is the server and client sofware for a collaboration textual tree website.
 
-<h1>Technical details</h1>
-<h2>Server side</h2>
-nodejs
-mongodb
-mongoose
-express
-jade
-cookie
+A tree is made of text branches. Starting with the root text branch, each text has 0 to n child text branches.
 
-<h2>Client side</h2>
-backbone js 
-underscore js
-require js 
-jquery 
+Text branches can be created by the tree owner and his contacts/friends.
 
-<h1>License</h1>
-MIT
+# Technical details
+## Server side
+- nodejs
+- mongodb
+- mongoose
+- express
+- jade
+- cookie  
+
+## Client side
+- backbone js 
+- underscore js
+- require js 
+- jquery 
+
+## License
+MIT License
