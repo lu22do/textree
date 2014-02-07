@@ -7,6 +7,11 @@ var dbPath = 'mongodb://localhost/textree';
 var fs = require('fs');
 var events = require('events');
 
+if (process.env.DBPATH) {
+  dbPath = process.env.DBPATH;
+}
+console.log('using dBpath =' + dbPath);
+
 // Create an http server
 app.server = http.createServer(app);
 
