@@ -1,4 +1,4 @@
-define(['TextreeView', 'text!templates/profile.html', 'text!templates/activity.html', 'models/Activity', 'views/Activity'], 
+define(['TextreeView', 'text!templates/profile.html', 'text!templates/activity.html', 'models/Activity', 'views/activity'], 
        function(TextreeView, profileTemplate, activityTemplate, Activity, ActivityView) {
   var profileView = TextreeView.extend({
     el: $('#content'),

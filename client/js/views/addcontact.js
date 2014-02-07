@@ -1,4 +1,4 @@
-define(['TextreeView', 'models/Contact', 'views/Contact', 'text!templates/addcontact.html'],
+define(['TextreeView', 'models/Contact', 'views/contact', 'text!templates/addcontact.html'],
        function(TextreeView, Contact, ContactView, addcontactTemplate)
 {
   var addcontactView = TextreeView.extend({
