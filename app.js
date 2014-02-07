@@ -6,11 +6,16 @@ var MemoryStore = require('connect').session.MemoryStore;
 var dbPath = 'mongodb://localhost/textree';
 var fs = require('fs');
 var events = require('events');
+var port = 8080;
 
 if (process.env.DBPATH) {
   dbPath = process.env.DBPATH;
 }
 console.log('using dBpath =' + dbPath);
+
+if (process.env.PORT) {
+  port = process.env.PORT;
+}
 
 // Create an http server
 app.server = http.createServer(app);
@@ -48,7 +53,7 @@ app.configure(function() {
   app.use(express.static(__dirname + '/client'));
   app.use(express.limit('1mb'));
   app.use(express.bodyParser());
-  app.use(express.cookieParser("textree secret key"));
+  app.use(express.cookieParser('textree secret key'));
   app.use(express.session({
     secret: app.sessionSecret,
     key: 'express.sid',
@@ -63,7 +68,7 @@ fs.readdirSync('routes').forEach(function(file) {
   if ( file[0] == '.' ) return;
   var routeName = file.substr(0, file.indexOf('.'));
   require('./routes/' + routeName)(app, models);
-  console.log("loaded " + routeName + " route");
+  console.log('loaded ' + routeName + ' route');
 });
 
 /* Test
@@ -76,8 +81,8 @@ models.Account.findById("52c2afcba8c5920e0e000003", function(account) {
 */
 
 app.get('/', function(req, res) {
-  res.render("index.jade");
+  res.render('index.jade');
 });
 
-app.server.listen(8080);
-console.log("SocialNet is listening to port 8080.");
+app.server.listen(port);
+console.log('Textree server is listening to port ' + port + '.');
