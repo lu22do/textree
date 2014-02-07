@@ -1,7 +1,7 @@
 {
   "name": "textree",
   "subdomain": "textree",
-  "version": "0.1.0-3",
+  "version": "0.1.0",
   "author": "lu22do",
   "private": true,
   "scripts": {
