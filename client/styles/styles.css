@@ -15,6 +15,12 @@ form {
   width: 400px;
 }
 
+h1 {
+  font-size: 22px;
+  margin-top: 30px;
+  margin-bottom: 15px;
+}
+
 .button {
   background:-webkit-gradient( linear, left top, left bottom, color-stop(0.05, #ededed), color-stop(1, #dfdfdf) );
   background:-moz-linear-gradient( center top, #ededed 5%, #dfdfdf 100% );
@@ -51,7 +57,7 @@ form {
 #topbar {
   width: 100%;
   height: 40px;
-  background-color: #A0D060;
+  background-color: #A8D878;
   box-shadow: 0px 3px 5px #404040;
   margin-bottom: 20px;
 }
@@ -79,7 +85,7 @@ form {
 }
 
 #topbar ul li:hover, .topbar_selected {
-  background-color:#CCC;
+  background-color: #CCC;
 }
 
 #topbar #logo {
@@ -93,7 +99,9 @@ form {
   font-size: 150%;
   line-height: 40px;
   margin-left: 8px;
+  text-shadow: 0px 1px 1px #404040;
 }
+
 #topbar #version {
   float: right;
   min-width: 40px;
@@ -103,10 +111,10 @@ form {
   margin-right: 8px;
 }
 
-
 table {
   max-width:800px;
   border-collapse:collapse;
+  box-shadow: 2px 2px 3px #404040;
 }
 
 td, th {
@@ -120,11 +128,16 @@ th {
   text-align:left;
   padding-top:5px;
   padding-bottom:4px;
-  background-color:#A7C942;
+  background-color:#A8D878;
+  font-style: italic;
+  font-family: Georgia, serif;
+  color: white;
+  font-size: 115%;
+  text-shadow: 0px 1px 1px #404040;
 }
 
 tr:nth-child(odd) {
-  background-color:#EAF2D3;
+  background-color:#E4F2D4;
 }
 
 #save_branch_done {
