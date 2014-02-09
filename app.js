@@ -3,10 +3,15 @@ var http = require('http');
 var app = express();
 var nodemailer = require('nodemailer');
 var MemoryStore = require('connect').session.MemoryStore;
+var pjson = require('./package.json');
 var dbPath = 'mongodb://localhost/textree';
 var fs = require('fs');
 var events = require('events');
 var port = 8080;
+var prod = process.env.NODE_ENV;
+if (prod == undefined) {
+  prod = 'dev';
+}
 
 if (process.env.DBPATH) {
   dbPath = process.env.DBPATH;
@@ -80,7 +85,10 @@ models.Account.findById("52c2afcba8c5920e0e000003", function(account) {
 */
 
 app.get('/', function(req, res) {
-  res.render('index.jade');
+  res.render('index.jade', {
+    prod: prod,
+    version: pjson.version
+  });
 });
 
 app.server.listen(port);

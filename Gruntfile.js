@@ -9,6 +9,17 @@ module.exports = function(grunt) {
             'server/*.js', 'server/models/*.js', 'server/routes/*.js']
     },
 
+    requirejs: {
+      compile: {
+        options: {
+          baseUrl: 'client/js',
+          mainConfigFile: 'client/js/boot.js',
+          name: 'boot',
+          out: 'client/build/js/client-optimized.js'
+        }
+      }
+    },
+
     watch: {
       options: {
         livereload: true,
@@ -23,10 +34,18 @@ module.exports = function(grunt) {
   });
 
   grunt.loadNpmTasks('grunt-contrib-jshint');
+  grunt.loadNpmTasks('grunt-contrib-requirejs');
   grunt.loadNpmTasks('grunt-contrib-watch');
 
   // Default task(s).
-  grunt.registerTask('default', ['jshint']);
+  grunt.registerTask('default', [
+    'jshint'
+  ]);
+
+  grunt.registerTask('build', [
+    'jshint',
+    'requirejs'
+  ]);
 
   grunt.registerTask('serve', ['watch']);
 };

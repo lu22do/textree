@@ -4,8 +4,11 @@ block content
   div#topbar
     div#logo Textree 
     ul
-    div#version version 0.1.0 (pre-alpha)
+    div#version= 'version ' + version + ' (pre-alpha) ' + prod
   div#content
 
 block scripts
-  script(data-main='js/boot', type='text/javascript', src='/js/libs/require.js')
+  if (prod == 'production')
+    script(data-main='build/js/client-optimized.js', type='text/javascript', src='/js/libs/require.js')
+  else
+    script(data-main='js/boot', type='text/javascript', src='/js/libs/require.js')

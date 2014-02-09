@@ -1,13 +1,11 @@
-require.config({
+requirejs.config({
   paths: {
-    jQuery: '/js/libs/jquery-2.0.3.min',
-    Underscore: '/js/libs/underscore',
-    Backbone: '/js/libs/backbone',
-    models: 'models',
-    text: '/js/libs/text',
-    templates: '../templates',
-
-    TextreeView: '/js/TextreeView'
+    'jQuery': 'libs/jquery-2.0.3.min',
+    'Underscore': 'libs/underscore',
+    'Backbone': 'libs/backbone',
+    'text': 'libs/text',
+    'models': 'models',
+    'templates': '../templates'
   },
 
   shim: {
