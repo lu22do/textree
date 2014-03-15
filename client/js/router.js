@@ -13,7 +13,7 @@ define(['TextreeView', 'views/index', 'views/register', 'views/login', 'views/fo
     socketEvents: _.extend({}, Backbone.Events),
 
     routes: {
-      'login': 'login',
+      'login(/:email)': 'login',
       'register': 'register',
       'forgotpassword': 'forgotpassword',
       'logout': 'logout',
@@ -84,8 +84,8 @@ define(['TextreeView', 'views/index', 'views/register', 'views/login', 'views/fo
       this.changeView(new AddContactView({router: this}), 'addcontact');
     },
 
-    login: function() {
-      this.changeView(new LoginView({router: this}), '');
+    login: function(email) {
+      this.changeView(new LoginView({router: this, email: email}), '');
     },
 
     forgotpassword: function() {

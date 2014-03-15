@@ -1,30 +1,29 @@
-<h1>Login</h1>
+<div class="center">
+  <form class="box">
+    <fieldset>
+      <legend>Login</legend>
+      
+      <p class="error" id="error"></p>
 
-<form>
-  <fieldset>
-    <legend>Credentials</legend>
+      <label>
+        Email address
+        <input type="text" name="email" value="<%= email %>">
+      </label>
 
-    <p class="error" id="error"></p>
+      <br />
 
-    <label>
-      Email:
-      <input type="text" name="email">
-    </label>
+      <label>
+        Password
+        <input type="password" name="password">
+      </label>
 
-    <br />
+      <br />
 
-    <label>
-      Password:
-      <input type="password" name="password">
-    </label>
+      <input class="button" type="submit" value="Login Now">
+      <a href="#forgotpassword" style="float: right; font-size: 80%;">Forgot Password?</a>
+    </fieldset>
+  </form>
 
-    <br />
-
-    <input class="button" type="submit" value="Login Now">
-  </fieldset>
-</form>
-
-<ul>
-  <li><a href="#forgotpassword">Forgot Password?</a></li>
-  <li><a href="#register">Sign Up</a></li>
-</ul>
+  <p />
+  New here? Please <a href="#register">Sign Up</a>.
+</div>

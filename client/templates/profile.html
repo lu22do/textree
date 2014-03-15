@@ -17,17 +17,17 @@ My profile
   </tr>
   
   <tr>
-    <td>First Name</td>
-    <% var name = user.get('name'); var firstname = name ? name.first : ''; %>
-    <td><%= firstname %></td>
+    <td>Name</td>
+    <td>
+      <span id="name_ro"><%= user.get('name') %></span>
+      <input type="text" name="name" value="<%= user.get('name') %>" size=50 style="display:none">
+
+      <a id="edit_name_button" class="button editbutton">Edit</a>
+      <a id="submit_name_button" class="button editbutton" style="display:none">Submit</a>
+      <a id="cancel_name_button" class="button editbutton" style="display:none">Cancel</a>
+    </td>
   </tr>
-  
-  <tr>
-    <td>Last Name</td>
-    <% var name = user.get('name'); var lastname = name ? name.last : ''; %>
-    <td><%= lastname %></td>
-  </tr>
-  
+    
   <% if (myprofile) { %>
   <tr>
     <td>Password</td>

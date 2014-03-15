@@ -16,7 +16,7 @@ if (prod == undefined) {
 if (process.env.DBPATH) {
   dbPath = process.env.DBPATH;
 }
-console.log('using dBpath =' + dbPath);
+console.log('using dBpath: ' + dbPath);
 
 if (process.env.PORT) {
   port = process.env.PORT;

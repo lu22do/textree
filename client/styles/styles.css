@@ -1,3 +1,7 @@
+* {
+  box-sizing: border-box;
+}
+
 body {
   margin: 0;
   font-family: Verdana, sans-serif;
@@ -11,9 +15,51 @@ textarea, button, input {
   font-size: 14px;
 }
 
-form {
+.center {
   width: 400px;
+  margin: 0px auto;
 }
+
+form.box {
+  width: 100%;
+  padding: 30px;
+  border-radius: 3px;
+  border: 1px solid #b0b0b0;
+}
+
+form label {
+  color: #444;
+  display: block;
+  margin-bottom: 15px;
+  width: 100%;
+}
+
+form input, form textarea, form select {
+  display: block;
+  border-radius: 5px;
+  border: 1px solid #b0b0b0;
+  box-shadow: inset 2px 2px 5px rgba(0,0,0,.075);
+  color: #444;
+  padding: 6px 0px 6px 4px;
+  width: 100%;
+}
+
+form legend {
+  border-bottom: 1px solid #b0b0b0;
+  font-size: 18px;
+  font-weight: 700;
+  width: 100%;
+  margin-bottom: 20px;
+}
+
+form fieldset {
+  border: 0;
+  padding: 0;
+  overflow: hidden;
+}
+
+
+
 
 h1 {
   font-size: 22px;
@@ -36,10 +82,11 @@ h1 {
   font-weight:normal;
   font-style:normal;
   font-size: 90%;
-  padding:1px 5px 2px 5px;
+  padding:1px 10px 2px 10px;
   margin:1px 5px 2px 0;
   text-decoration:none;
   text-align:center;
+  width: auto;
 }
 
 .button:hover {
@@ -50,20 +97,27 @@ h1 {
   cursor: pointer;
 }
 
+.editbutton {
+  float: right;
+}
+
 #content {
-  margin: 10px;
+  min-width: 400px;
+  width: 70%;
+  margin: 10px auto;
 }
 
 #topbar {
   width: 100%;
   height: 40px;
-  background-color: #A8D878;
+  background-color: #ACE079;
   box-shadow: 0px 3px 5px #404040;
   margin-bottom: 20px;
+  overflow: scroll;
 }
 
 #topbar ul {
-  margin: 0;
+  margin: 0 auto;
   padding: 0;
 }
 
@@ -71,10 +125,8 @@ h1 {
   float: left;
   border-right: 1px solid #FFF;
   border-left: 1px solid #FFF;
-  height: 40px;
   list-style: none;
   line-height: 40px;
-  text-align: center;
   cursor: pointer;
   padding: 0 5px 0 5px;
   margin-left: -1px;
@@ -113,6 +165,7 @@ h1 {
 
 table {
   max-width:800px;
+  min-width: 400px;
   border-collapse:collapse;
   box-shadow: 2px 2px 3px #404040;
 }
@@ -128,7 +181,7 @@ th {
   text-align:left;
   padding-top:5px;
   padding-bottom:4px;
-  background-color:#A8D878;
+  background-color:#ACE079;
   font-style: italic;
   font-family: Georgia, serif;
   color: white;
@@ -170,4 +223,8 @@ tr:nth-child(odd) {
 #popup_buttons {
   text-align: center;
   width: 100%;
+}
+
+.error {
+  display: none;
 }

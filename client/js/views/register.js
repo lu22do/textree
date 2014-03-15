@@ -8,16 +8,30 @@ define(['text!templates/register.html'], function(registerTemplate) {
 
     register: function() {
       var that = this;
+      $('.error').slideUp();
       $.post('/api/register', {
-        firstName: $('input[name=firstName]').val(),
-        lastName: $('input[name=lastName]').val(),
+        name: $('input[name=name]').val(),
         pseudo: $('input[name=pseudo]').val(),
         email: $('input[name=email]').val(),
         password: $('input[name=password]').val()
-      }, function() {
-        window.location.hash = 'login';
-      }).error(function(){
-        that.$el.html('Error registering');
+      }).done(function() {
+        $('#account_created').slideDown();
+        setTimeout(function() {
+          window.location.hash = 'login/' + $('input[name=email]').val();
+        }, 2000);
+      }).fail(function(xhr, textStatus, errorThrown) {
+        if (xhr.status == 412 && xhr.responseText == 'email') {
+          $('#email_already_exists_error').slideDown();
+        }
+        else if (xhr.status == 412 && xhr.responseText == 'pseudo') {
+          $('#pseudo_already_exists_error').slideDown();
+        }
+        else if (xhr.status == 400) {
+          $('#invalid_input_error').slideDown();
+        }
+        else {
+          $('#system_error').slideDown();
+        }
       });
       return false;
     },

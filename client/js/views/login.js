@@ -8,6 +8,7 @@ define(['text!templates/login.html'], function(loginTemplate) {
 
     initialize: function(options) {
       this.router = options.router;
+      this.email = options.email? options.email: '';
     },
 
     login: function() {
@@ -23,9 +24,13 @@ define(['text!templates/login.html'], function(loginTemplate) {
     },
 
     render: function() {
-      this.$el.html(loginTemplate);
+      this.$el.html(_.template(loginTemplate, {email: this.email}));
       $('#error').hide();
-      $('input[name=email]').focus();
+      if (!this.email) {
+        $('input[name=email]').focus();
+      } else {
+        $('input[name=password]').focus();
+      }
     }
   });
 

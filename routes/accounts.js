@@ -101,6 +101,23 @@ module.exports = function(app, models) {
     });
   });
 
+  app.put('/api/accounts', function(req, res) {
+    var accountId = req.session.accountId;
+
+    var update = req.body;
+    console.log('update account: ' + JSON.stringify(update));
+
+    models.Account.update(accountId, update, function(err) {
+      if (err) {
+        console.error(err.trace);
+        res.send(424); // method failure
+      }
+      else {
+        res.send(200);
+      }
+    });
+  });
+
   app.delete('/api/accounts/:id/contact', function(req,res) {
     var accountId = req.params.id == 'me' ?
                     req.session.accountId :

@@ -20,11 +20,7 @@ module.exports = function(app, config, mongoose, nodemailer) {
 
   var ContactSchema = new Schema({
     pseudo: String,
-    name: {
-      first: {type: String},
-      last: {type: String},
-      full: {type: String}     
-    },
+    name: String,
     accountId: {type: Schema.ObjectId},
     added: {type: Date},
     updated: {type: Date} /* ??? */
@@ -36,11 +32,7 @@ module.exports = function(app, config, mongoose, nodemailer) {
     password: {type: String},
     pseudo: {type: String},
     admin: {type: Boolean},
-    name: {
-      first: {type: String},
-      last: {type: String},
-      full: {type: String}
-    },
+    name: String,
     birthday: {
       day: {type: Number, min: 1, max: 31, required: false},
       month: {type: Number, min: 1, max: 12, required: false},
@@ -55,34 +47,46 @@ module.exports = function(app, config, mongoose, nodemailer) {
 
   var Account = mongoose.model('Account', AccountSchema);
 
-  var registerCallback = function(err) {
-    if (err) {
-      return console.log(err);
-    }
-    return console.log('Account was created');
-  };
-
-  var register = function(email, password, pseudo, firstName, lastName) {
+  var create = function(email, password, pseudo, name, cb) {
     var shaSum = crypto.createHash('sha256');
     shaSum.update(password);
 
-    var fullName = firstName;
-    if (lastName.length > 0)
-        fullName += ' ' + lastName;
-
-    console.log('Registering ' + email);
-    var user = new Account({
-      email: email,
-      password: shaSum.digest('hex'),
-      pseudo: pseudo,
-      name: {
-        first: firstName,
-        last: lastName,
-        full: fullName
+    Account.findOne({email: email}, function(err, doc) {
+      if (doc) {
+        cb({emailAlreadyExists: true});
+        return;
       }
+
+      Account.findOne({pseudo: pseudo}, function(err, doc) {
+        if (doc) {
+          cb({pseudoAlreadyExists: true});
+          return;
+        }
+
+        console.log('Creating ' + email);
+        var user = new Account({
+          email: email,
+          password: shaSum.digest('hex'),
+          pseudo: pseudo,
+          name: name
+        });
+
+        user.save(function() {
+          if (err) {
+            console.log(err);
+            cb(err);
+            return;
+          }
+          console.log('Account was created');
+          cb();        
+        });
+        console.log('Save command sent');
+      });
     });
-    user.save(registerCallback);
-    console.log('Save command sent');
+  };
+
+  var update = function(accountId, updateJSON, cb) {
+    Account.update({_id: accountId}, {$set: updateJSON}, {upsert: false}, cb);
   };
 
   var forgotPassword = function(email, resetPasswordUrl, callback) {
@@ -153,11 +157,7 @@ module.exports = function(app, config, mongoose, nodemailer) {
     }
     var contact = {
       pseudo: addcontact.pseudo,
-      name: {
-        first: addcontact.name.first, 
-        last: addcontact.name.last,
-        full: addcontact.name.full
-      },
+      name: addcontact.name, 
       accountId: addcontact._id,
       added: new Date(),
       updated: new Date()
@@ -247,7 +247,8 @@ module.exports = function(app, config, mongoose, nodemailer) {
   };
 
   return {
-    register: register,
+    create: create,
+    update: update,
     forgotPassword: forgotPassword,
     changePassword: changePassword,
     login: login,

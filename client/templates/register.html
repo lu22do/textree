@@ -1,34 +1,31 @@
-<h1>Register</h1>
+<div class="center">
+  <p class="error" id="email_already_exists_error">An account with this email already exists! Please try again.</p>
+  <p class="error" id="pseudo_already_exists_error">An account with this pseudo already exists! Please try again.</p>
+  <p class="error" id="invalid_input_error">Invalid input! Please try again.</p>
+  <p class="error" id="system_error">System error, please retry later.</p>
+  <p class="error" id="account_created">Account created, please login now...</p>
 
-<form>
+  <form class="box">
+    <fieldset>
+      <legend>Create an account</legend>
 
-  <fieldset>
-    <legend>Email address (for login only)</legend>
-    <label>Email:<input type="text" name="email" /></label>
-    <br />
-    <label>Email (confirm):<input type="text" name="cemail" /></label>
-  </fieldset>
+      <label>Email address (for login only)
+        <input type="text" name="email">
+      </label>
 
-  <fieldset>
-    <legend>Password</legend>
-    <label>Password:<input type="password" name="password" /></label>
-    <br />
-    <label>Password (confirm):<input type="password" name="cpassword" /></label>
-  </fieldset>
+      <label>Password
+        <input type="password" name="password">
+      </label>
+      
+      <label>Pseudo (to identify you)
+        <input type="text" name="pseudo">
+      </label>
 
-  <fieldset>
-    <legend>Pseudo (to identify you)</legend>
-    <label>Pseudo:<input type="text" name="pseudo" /></label>
-  </fieldset>
+      <label>Your full name (optional) 
+        <input type="text" name="name">
+      </label>
 
-  <fieldset>
-    <legend>Your name (Optional)</legend>
-    <label>First:<input type="text" name="firstName" /></label>
-    <br />
-    <label>Last:<input type="text" name="lastName" /></label>
-  </fieldset>
-
-  <p>
-    <input class="button" type="submit" value="Register Now" />
-  </p>
-</form>
+      <input class="button" type="submit" value="Register Now" />
+    </fieldset>
+  </form>
+</div>

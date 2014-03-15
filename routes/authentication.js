@@ -76,8 +76,7 @@ module.exports = function(app, models) {
   });
 
   app.post('/api/register', function(req, res) {
-    var firstName = req.param('firstName', '');
-    var lastName = req.param('lastName', '');
+    var name = req.param('name', '');
     var pseudo = req.param('pseudo', null);
     var email = req.param('email', null);
     var password = req.param('password', null);
@@ -85,11 +84,24 @@ module.exports = function(app, models) {
     if (null === email || email.length < 1 || 
         null === password || password.length < 1 || 
         null === pseudo || pseudo.length < 1) {
-      res.send(400);
+      res.send(400); // bad request
       return;
     }
 
-    models.Account.register(email, password, pseudo, firstName, lastName);
-    res.send(200);
+    models.Account.create(email, password, pseudo, name, function(err) {
+      if (err) {
+        if (err.emailAlreadyExists) {
+          res.send(412, 'email');
+        }
+        else if (err.pseudoAlreadyExists) {
+          res.send(412, 'pseudo');
+        } 
+        else {
+          res.send(500);
+        }
+        return;        
+      }
+      res.send(200);
+    });
   });
 };
