@@ -24,6 +24,7 @@ define(['TextreeView', 'views/popup', 'text!templates/branch.html', 'models/Bran
     requestColl: false,
 
     update: function() {
+
       if (!this.requestColl) {
         this.requestColl = true;
         this.model.get('children').fetch({reset: true});
@@ -32,7 +33,8 @@ define(['TextreeView', 'views/popup', 'text!templates/branch.html', 'models/Bran
       this.$el.html(_.template(branchTemplate, {
         branch: this.model.toJSON(),
         children: this.model.get('children').toJSON(),
-        loggedAccountId: this.router.loggedAccount._id
+        loggedAccountId: this.router.loggedAccount._id,
+        branchDefaultName: 'Branch ' + this.model.get('children').length 
       }));
     },
 
@@ -94,16 +96,15 @@ define(['TextreeView', 'views/popup', 'text!templates/branch.html', 'models/Bran
     },
 
     newBranch: function() {
-      /*
-      var arr = this.model.get('children');
-      arr.push('1234');
-      this.model.set({children: arr});
-      this.update();
-      */
+      var title = $('#new_branch input[name=title]').val();
+      if (title == '') {
+        title = $('#new_branch input[name=title]').attr("placeholder");
+      }
+
       var that = this;
       $.post('/api/branches', {
         parentId: this.model.get('id'),
-        title: $('#new_branch input[name=title]').val(),
+        title: title,
         text: ''
       }, function() {
         that.model.get('children').fetch({reset: true});

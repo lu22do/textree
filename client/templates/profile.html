@@ -20,11 +20,16 @@ My profile
     <td>Name</td>
     <td>
       <span id="name_ro"><%= user.get('name') %></span>
+
+      <% if (myprofile) { %>
+
       <input type="text" name="name" value="<%= user.get('name') %>" size=50 style="display:none">
 
       <a id="edit_name_button" class="button editbutton">Edit</a>
       <a id="submit_name_button" class="button editbutton" style="display:none">Submit</a>
       <a id="cancel_name_button" class="button editbutton" style="display:none">Cancel</a>
+
+      <% } %>
     </td>
   </tr>
     

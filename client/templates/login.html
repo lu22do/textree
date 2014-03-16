@@ -3,20 +3,23 @@
     <fieldset>
       <legend>Login</legend>
       
-      <p class="error" id="error"></p>
+      <p class="error" id="login_error">Unable to login!</p>
+      <p class="error" id="noemail_error">You need to enter your email!</p>
+      <p class="error" id="nopassword_error">You need to enter your password!</p>
 
       <label>
         Email address
         <input type="text" name="email" value="<%= email %>">
       </label>
 
-      <br />
-
       <label>
         Password
         <input type="password" name="password">
       </label>
 
+      <input type="checkbox" name="rememberme" <%= rememberme %>>Remember me</input>
+      
+      <br />
       <br />
 
       <input class="button" type="submit" value="Login Now">

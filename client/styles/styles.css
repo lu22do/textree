@@ -27,14 +27,14 @@ form.box {
   border: 1px solid #b0b0b0;
 }
 
-form label {
+.center form label {
   color: #444;
   display: block;
   margin-bottom: 15px;
   width: 100%;
 }
 
-form input, form textarea, form select {
+.center form input[type=text], form input[type=password], form textarea, form select {
   display: block;
   border-radius: 5px;
   border: 1px solid #b0b0b0;
@@ -57,8 +57,6 @@ form fieldset {
   padding: 0;
   overflow: hidden;
 }
-
-
 
 
 h1 {
