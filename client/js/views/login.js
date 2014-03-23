@@ -11,7 +11,7 @@ define(['text!templates/login.html'], function(loginTemplate) {
     var ca = document.cookie.split(';');
     for(var i=0; i<ca.length; i++) {
       var c = ca[i].trim();
-      if (c.indexOf(name) == 0) {
+      if (c.indexOf(name) === 0) {
         return c.substring(name.length, c.length);
       }
     }
@@ -46,12 +46,12 @@ define(['text!templates/login.html'], function(loginTemplate) {
 
       $('.error').slideUp();
 
-      if ($('input[name=email]').val() == '') {
+      if ($('input[name=email]').val() === '') {
         $('#noemail_error').slideDown();
         return false;        
       }
 
-      if ($('input[name=password]').val() == '') {
+      if ($('input[name=password]').val() === '') {
         $('#nopassword_error').slideDown();
         return false;
       }

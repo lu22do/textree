@@ -20,6 +20,14 @@ module.exports = function(grunt) {
       }
     },
 
+    gitpush: {
+      target1: {
+        options: {
+          remote: 'origin, heroku'
+        }
+      }
+    },
+
     watch: {
       options: {
         livereload: true,
@@ -36,6 +44,7 @@ module.exports = function(grunt) {
   grunt.loadNpmTasks('grunt-contrib-jshint');
   grunt.loadNpmTasks('grunt-contrib-requirejs');
   grunt.loadNpmTasks('grunt-contrib-watch');
+  grunt.loadNpmTasks('grunt-git');
 
   // Default task(s).
   grunt.registerTask('default', [
@@ -47,6 +56,13 @@ module.exports = function(grunt) {
     'requirejs'
   ]);
 
-  grunt.registerTask('serve', ['watch']);
+  grunt.registerTask('push', [
+    'build',
+    'gitpush target1'
+  ]);
+
+  grunt.registerTask('serve', [
+    'watch'
+  ]);
 };
 

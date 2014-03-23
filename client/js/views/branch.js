@@ -97,8 +97,8 @@ define(['TextreeView', 'views/popup', 'text!templates/branch.html', 'models/Bran
 
     newBranch: function() {
       var title = $('#new_branch input[name=title]').val();
-      if (title == '') {
-        title = $('#new_branch input[name=title]').attr("placeholder");
+      if (title === '') {
+        title = $('#new_branch input[name=title]').attr('placeholder');
       }
 
       var that = this;

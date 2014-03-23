@@ -1,7 +1,7 @@
 {
   "name": "textree",
   "subdomain": "textree",
-  "version": "0.1.1",
+  "version": "0.1.2",
   "author": "lu22do",
   "private": true,
   "scripts": {
@@ -21,7 +21,8 @@
     "grunt-contrib-watch": "~0.5.2",
     "grunt-contrib-requirejs": "~0.4.1",
     "mocha": "~1.17.1",
-    "restify": "~2.6.1"
+    "restify": "~2.6.1",
+    "grunt-git": "~0.2.6"
   },
   "engines": {
     "node": "0.10.x"
