@@ -20,7 +20,7 @@ module.exports = function(grunt) {
       }
     },
 
-    push: {
+    gitpush: {
       origin: {
         options: {
           remote: 'origin'
@@ -59,6 +59,10 @@ module.exports = function(grunt) {
   grunt.registerTask('build', [
     'jshint',
     'requirejs'
+  ]);
+
+  grunt.registerTask('push', [
+    'gitpush',
   ]);
 
   grunt.registerTask('serve', [
