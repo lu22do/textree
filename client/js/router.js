@@ -77,7 +77,7 @@ define(['TextreeView', 'views/index', 'views/register', 'views/login', 'views/fo
     },
 
     createtree: function() {
-      this.changeView(new CreateTreeView(), 'createtree');
+      this.changeView(new CreateTreeView(), '');
     },
 
     addcontact: function() {

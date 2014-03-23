@@ -10,7 +10,6 @@ define(['text!templates/topbar.html'], function(topbarTemplate) {
     routes: {
       'topbar_index': '#index',
       'topbar_mytrees': '#treelist/me',
-      'topbar_createtree': '#createtree', 
       'topbar_myprofile': '#profile/me',
       'topbar_mycontacts': '#contacts/me',
       'topbar_logout': '#logout'

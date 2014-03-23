@@ -20,10 +20,15 @@ module.exports = function(grunt) {
       }
     },
 
-    gitpush: {
-      target1: {
+    push: {
+      origin: {
         options: {
-          remote: 'origin, heroku'
+          remote: 'origin'
+        }
+      },
+      heroku: {
+        options: {
+          remote: 'heroku'
         }
       }
     },
@@ -54,11 +59,6 @@ module.exports = function(grunt) {
   grunt.registerTask('build', [
     'jshint',
     'requirejs'
-  ]);
-
-  grunt.registerTask('push', [
-    'build',
-    'gitpush target1'
   ]);
 
   grunt.registerTask('serve', [
