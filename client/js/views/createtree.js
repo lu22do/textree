@@ -16,9 +16,8 @@ define(['TextreeView', 'text!templates/createtree.html'],
       $.ajax('/api/trees' , {
         type: 'POST',
         data: data,
-        success: function() {
-          console.log('create success');
-          window.location.hash = '#index'; 
+        success: function(data) {
+          window.location.hash = '#branch/' + data.rootBranch; 
         },
         error: function() {
           alert('Could not create tree');

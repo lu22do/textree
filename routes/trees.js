@@ -51,7 +51,7 @@ module.exports = function(app, models) {
           }
           models.Account.addTree(account, tree, false);
           models.Account.createActivity(account, 'TreeCreated', tree.name, tree._id, null, null, function(/*err*/) {
-            res.send(200);
+            res.send({id: tree._id, rootBranch: tree.rootBranch})
           });
         });
       }
