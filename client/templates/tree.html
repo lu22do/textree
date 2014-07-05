@@ -12,9 +12,9 @@
       <span id="name_ro"><%= tree.get('name') %></span>
     </td>
     <td>
-      <a id="edit_name_button" class="button">Edit</a>
-      <a id="submit_name_button" class="button" style="display:none">Submit</a>
-      <a id="cancel_name_button" class="button" style="display:none">Cancel</a>
+      <a id="edit_name_button" class="btn btn-default btn-sm">Edit</a>
+      <a id="submit_name_button" class="btn btn-default btn-sm" style="display:none">Submit</a>
+      <a id="cancel_name_button" class="btn btn-default btn-sm" style="display:none">Cancel</a>
     </td>
   </tr>
   <tr>
@@ -24,9 +24,9 @@
       <span id="desc_ro"><%= tree.get('description') %></span>
     </td>
     <td>
-      <a id="edit_desc_button" class="button">Edit</a>
-      <a id="submit_desc_button" class="button" style="display:none">Submit</a>
-      <a id="cancel_desc_button" class="button" style="display:none">Cancel</a>
+      <a id="edit_desc_button" class="btn btn-default btn-sm">Edit</a>
+      <a id="submit_desc_button" class="btn btn-default btn-sm" style="display:none">Submit</a>
+      <a id="cancel_desc_button" class="btn btn-default btn-sm" style="display:none">Cancel</a>
     </td>
   </tr>
   <tr>
@@ -48,6 +48,6 @@
 </table>
 
 <br>
-<a class="button" href="#branch/<%= tree.get('rootBranch') %>">Jump to root branch</a>
-<a class="button" id="delete_button">Delete this tree</a>
+<a class="btn btn-default" href="#branch/<%= tree.get('rootBranch') %>">Jump to root branch</a>
+<a class="btn btn-default" id="delete_button">Delete this tree</a>
 <div id="popup"></div>

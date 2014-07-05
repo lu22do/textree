@@ -1,5 +1,5 @@
 <div class="center">
-  <form class="box">
+  <form class="box" role="form">
     <fieldset>
       <legend>Login</legend>
       
@@ -7,22 +7,26 @@
       <p class="error" id="noemail_error">You need to enter your email!</p>
       <p class="error" id="nopassword_error">You need to enter your password!</p>
 
-      <label>
-        Email address
-        <input type="text" name="email" value="<%= email %>">
-      </label>
+      <div class="form-group">
+        <label>Email address</label>
+        <input class="form-control" type="text" name="email" value="<%= email %>">
+      </div>
 
-      <label>
-        Password
-        <input type="password" name="password">
-      </label>
+      <div class="form-group">
+        <label>Password</label>
+        <input class="form-control" type="password" name="password">
+      </div>
 
-      <input type="checkbox" name="rememberme" <%= rememberme %>>Remember me</input>
-      
+      <div class="checkbox">
+        <label>
+          <input type="checkbox" name="rememberme" <%= rememberme %>>Remember me</input>
+        </label>
+      </div>
+
       <br />
       <br />
 
-      <input class="button" type="submit" value="Login Now">
+      <input class="btn btn-default" type="submit" value="Login Now">
       <a href="#forgotpassword" style="float: right; font-size: 80%;">Forgot Password?</a>
     </fieldset>
   </form>

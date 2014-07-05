@@ -26,9 +26,9 @@ define(['text!templates/topbar.html'], function(topbarTemplate) {
         if (this.currentHighlight === null) {
           this.$el.html(_.template(topbarTemplate, {loggedUser: this.loggedUser}));
         } else {
-          $('#topbar_' + this.currentHighlight).removeClass('topbar_selected');          
+          $('#topbar_' + this.currentHighlight).parent().removeClass('active');          
         }
-        $('#topbar_' + TopbarLink).addClass('topbar_selected');
+        $('#topbar_' + TopbarLink).parent().addClass('active');
         this.currentHighlight = TopbarLink;
       }
     },

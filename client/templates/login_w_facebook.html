@@ -1,0 +1,55 @@
+<div id="fb-root"></div>
+<script>(function(d, s, id) {
+  var js, fjs = d.getElementsByTagName(s)[0];
+  if (d.getElementById(id)) return;
+  js = d.createElement(s); 
+  js.id = id;
+  js.src = "//connect.facebook.net/en_US/all.js#xfbml=1&appId=504465712996933";
+  fjs.parentNode.insertBefore(js, fjs);
+}(document, 'script', 'facebook-jssdk'));
+</script>
+<div class="center">
+  <form class="box">
+    <fieldset>
+      <legend>Login</legend>
+      
+      <p class="error" id="login_error">Unable to login!</p>
+      <p class="error" id="noemail_error">You need to enter your email!</p>
+      <p class="error" id="nopassword_error">You need to enter your password!</p>
+
+      <label>
+        Email address
+        <input type="text" name="email" value="<%= email %>">
+      </label>
+
+      <label>
+        Password
+        <input type="password" name="password">
+      </label>
+
+      <input type="checkbox" name="rememberme" <%= rememberme %>>Remember me</input>
+      
+      <br />
+      <br />
+
+      <input class="button" type="submit" value="Login Now">
+      <a href="#forgotpassword" style="float: right; font-size: 80%;">Forgot Password?</a>
+
+    </fieldset>
+
+    <p />
+    New here? Please <a href="#register">Sign Up</a>.
+  </form>
+
+  <p />
+  
+  <form class="box">
+    <fieldset>
+      <legend>Login with Facebook</legend>
+      
+      <div class="fb-login-button" data-max-rows="1" data-size="large" data-show-faces="false" data-auto-logout-link="false">
+      </div>
+    </fieldset>
+  </form>
+
+</div>

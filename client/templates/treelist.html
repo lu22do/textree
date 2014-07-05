@@ -35,7 +35,7 @@ No trees
       <td><%= udate.toLocaleDateString() + " " + udate.toLocaleTimeString() %></td>
       <td><%= tree.get('nbBranches') %></td>
       <td>
-        <a class="button" href="#tree/<%= tree.get('_id') %>">Details</a>
+        <a class="btn btn-default btn-sm" href="#tree/<%= tree.get('_id') %>">Details</a>
       </td>
   <% } %> 
     </tr>
@@ -45,6 +45,6 @@ No trees
 
 <% if (complete) { %>
 <p>
-  <a class="button" href="#createtree">Create a new tree</a>
+  <a class="btn btn-default" href="#createtree">Create a new tree</a>
 </p>
 <% } %>

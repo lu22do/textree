@@ -3,6 +3,7 @@ requirejs.config({
     'jQuery': 'libs/jquery-2.0.3.min',
     'Underscore': 'libs/underscore',
     'Backbone': 'libs/backbone',
+    'Bootstrap': 'libs/bootstrap.min',
     'text': 'libs/text',
     'models': 'models',
     'templates': '../templates'
@@ -10,7 +11,8 @@ requirejs.config({
 
   shim: {
     'Backbone': ['Underscore', 'jQuery'],
-    'Textree': ['Backbone']
+    'Bootstrap': ['jQuery'],
+    'Textree': ['Backbone', 'Bootstrap']
   }
 });
 

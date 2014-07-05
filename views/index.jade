@@ -1,11 +1,19 @@
 extends layout
 
 block content
-  div#topbar
-    div#logo Textree 
-    ul
-    div#version= 'version ' + version + ' (pre-alpha) ' + prod
-  div#content
+  div#topbar.navbar.navbar-default.navbar-fixed-top(role="navigation")
+    div.container-fluid
+      div.navbar-header
+        button.navbar-toggle(type="button", data-toggle="collapse", data-target=".navbar-collapse")
+          span.sr-only Toggle navigation
+          span.icon-bar
+          span.icon-bar
+          span.icon-bar
+        a#logo.navbar-brand(href="#") Textree
+      div.collapse.navbar-collapse
+        ul.nav.navbar-nav
+        div#version.nav.navbar-nav.navbar-right.navbar-text.hidden-xs.hidden-sm= 'version ' + version + ' (pre-alpha) ' + prod
+  div#content.container.theme-showcase(role="main")
 
 block scripts
   if (prod == 'production')

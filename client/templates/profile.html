@@ -25,9 +25,9 @@ My profile
 
       <input type="text" name="name" value="<%= user.get('name') %>" size=50 style="display:none">
 
-      <a id="edit_name_button" class="button editbutton">Edit</a>
-      <a id="submit_name_button" class="button editbutton" style="display:none">Submit</a>
-      <a id="cancel_name_button" class="button editbutton" style="display:none">Cancel</a>
+      <a id="edit_name_button" class="btn btn-default btn-sm editbutton">Edit</a>
+      <a id="submit_name_button" class="btn btn-default btn-sm pull-right" style="display:none">Submit</a>
+      <a id="cancel_name_button" class="btn btn-default btn-sm pull-right" style="display:none">Cancel</a>
 
       <% } %>
     </td>
@@ -37,9 +37,9 @@ My profile
   <tr>
     <td>Password</td>
     <td id="password">
-      <a id="change_button" class="button">Change password</a>
-      <a id="submit_button" class="button" style="display:none">Submit</a>
-      <a id="cancel_button" class="button" style="display:none">Cancel</a>
+      <a id="change_button" class="btn btn-default btn-sm">Change password</a>
+      <a id="submit_button" class="btn btn-default btn-sm" style="display:none">Submit</a>
+      <a id="cancel_button" class="btn btn-default btn-sm" style="display:none">Cancel</a>
     </td>
   </tr>
   <% } %>
@@ -49,9 +49,9 @@ My profile
     <td>
       <% var trees = user.get('trees'); var nbTrees = trees ? trees.length : 0; %>
       <% if (myprofile) { %>
-      <a class="button" href="#treelist/me"><%= nbTrees %></a>
+      <a class="btn btn-default btn-sm" href="#treelist/me"><%= nbTrees %></a>
       <% } else { %>
-      <a class="button" href="#treelist/<%= user.get('_id') %>/<%= user.get('pseudo') %>"><%= nbTrees %></a>
+      <a class="btn btn-default btn-sm" href="#treelist/<%= user.get('_id') %>/<%= user.get('pseudo') %>"><%= nbTrees %></a>
       <% } %>
     </td>
   </tr>
@@ -61,7 +61,7 @@ My profile
     <td>
       <% var contacts = user.get('contacts'); nbContacts = contacts ? contacts.length : ''; %>
       <% if (myprofile) { %>
-      <a class="button" href="#contacts/me"><%= nbContacts %></a>
+      <a class="btn btn-default btn-sm" href="#contacts/me"><%= nbContacts %></a>
       <% } else { %>
       <%= nbContacts %>
       <% } %>

@@ -10,16 +10,16 @@
 <% if (!removeButton) { %>
 Already a contact
 <% } else { %>
-<a class="button" href="#profile/<%= model.accountId %>">View</a>
+<a class="btn btn-default btn-sm" href="#profile/<%= model.accountId %>">View</a>
 <% } %>
 <% } %>
 
 <% if (addButton) { %>
-<a class="button" id="addbutton">Add Contact</a>
+<a class="btn btn-default btn-sm" id="addbutton">Add Contact</a>
 <% } %>
 
 <% if (removeButton) { %>
-<a class="button" id="removebutton">Remove Contact</a>
+<a class="btn btn-default btn-sm" id="removebutton">Remove Contact</a>
 <% } %>
 
 <span id="actionarea"></span>

@@ -14,9 +14,9 @@
 <textarea id='branch_text' style='width: 100%' rows="8"><%= branch.text %></textarea>
 
 <% if (branch.author.accountId == loggedAccountId) { %>
-<a class="button" id="deletebranch_button">Delete this branch</a>
+<a class="btn btn-default" id="deletebranch_button">Delete this branch</a>
 
-<a class="button" id="savebranch_button">Save Edits</a>
+<a class="btn btn-default" id="savebranch_button">Save Edits</a>
 <span id='save_branch_done'>Done</span>
 <% } %>
 
@@ -41,7 +41,7 @@ Children branches:
 <form id='new_branch'>
   <fieldset>
     <label>Title:<input type="text" name="title" id="create_branch" placeholder="<%= branchDefaultName %>"/></label>
-    <input class="button" type="submit" id="createbranch_button" value="Create child branch">
+    <input class="btn btn-default" type="submit" id="createbranch_button" value="Create child branch">
   </fieldset>
 </form>
 
