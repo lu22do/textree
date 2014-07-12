@@ -5,25 +5,29 @@
   <p class="error" id="system_error">System error, please retry later.</p>
   <p class="error" id="account_created">Account created, please login now...</p>
 
-  <form class="box">
+  <form class="box" role="form">
     <fieldset>
       <legend>Create an account</legend>
 
-      <label>Email address (for login only)
-        <input type="text" name="email">
-      </label>
+      <div class="form-group">
+        <label>Email address (for login only)</label>
+        <input class="form-control" type="text" name="email">
+      </div>
 
-      <label>Password
-        <input type="password" name="password">
-      </label>
+      <div class="form-group">
+        <label>Password</label>
+        <input class="form-control" type="password" name="password">
+      </div>
+
+      <div class="form-group">
+        <label>Pseudo (to identify you)</label>
+        <input class="form-control" type="text" name="pseudo">
+      </div>
       
-      <label>Pseudo (to identify you)
-        <input type="text" name="pseudo">
-      </label>
-
-      <label>Your full name (optional) 
-        <input type="text" name="name">
-      </label>
+      <div class="form-group">
+        <label>Your full name (optional)</label>
+        <input class="form-control" type="text" name="name">
+      </div>
 
       <input class="btn btn-default" type="submit" value="Register Now" />
     </fieldset>

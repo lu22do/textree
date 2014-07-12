@@ -1,9 +1,6 @@
 textr.ee
 forest
 
-
-
-
 inspired by
 - https://github.com/thomasdavis/backbonetutorials/tree/gh-pages/examples/nodejs-mongodb-mongoose-restify
 - SocialNetwork
@@ -209,6 +206,8 @@ Todo:
 - several branches on same page (with tabs)
 - infinite tree scrolling
 - advanced text edit, with edit button
+- upgrade to latest libs / update package.json
+- backup/restore mongo, sanity check
 
 - facebook login
 - REST API unit tests —> add to grunt? Makefile?
@@ -254,7 +253,7 @@ Done textree:
 - Remove addnewtree from top bar & “Add new tree” button in “my trees”
 - After creating a tree, go directly to root branch
 - using bootstrap 
-
+- using connect-mongo (instead of MemoryStore) to store sessions in Mongodb
 
 Done learning/setup:
 - Installed jshint plugin in Sublime, configured it

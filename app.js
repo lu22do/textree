@@ -2,7 +2,7 @@ var express = require('express');
 var http = require('http');
 var app = express();
 var nodemailer = require('nodemailer');
-var MemoryStore = require('connect').session.MemoryStore;
+var MongoStore = require('connect-mongo')(express);
 var pjson = require('./package.json');
 var dbPath = 'mongodb://localhost/textree';
 var fs = require('fs');
@@ -16,7 +16,7 @@ if (prod == undefined) {
 if (process.env.DBPATH) {
   dbPath = process.env.DBPATH;
 }
-console.log('using dBpath: ' + dbPath);
+console.log('using dbPath: ' + dbPath);
 
 if (process.env.PORT) {
   port = process.env.PORT;
@@ -36,9 +36,6 @@ app.removeEventListener = function( eventName, callback ) {
 app.triggerEvent = function( eventName, eventOptions ) {
   eventDispatcher.emit( eventName, eventOptions );
 };
-
-// Create a session store to share between methods
-app.sessionStore = new MemoryStore();
 
 // Import the data layer
 var mongoose = require('mongoose');
@@ -61,7 +58,10 @@ app.configure(function() {
   app.use(express.session({
     secret: app.sessionSecret,
     key: 'express.sid',
-    store: app.sessionStore}));
+    store: new MongoStore({
+      url: dbPath
+    })
+  }));
   mongoose.connect(dbPath, function onMongooseError(err) {
     if (err) throw err;
   });

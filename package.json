@@ -8,12 +8,13 @@
     "start": "node ./app"
   },
   "dependencies": {
+    "connect": ">= 1.9.1",
+    "connect-mongo": "^0.4.1",
+    "cookie": ">= 0.0.4",
     "express": "~3.4.8",
     "jade": "~1.1.5",
     "mongoose": "~3.8.6",
-    "nodemailer": "~0.6.0",
-    "connect": ">= 1.9.1",
-    "cookie": ">= 0.0.4"
+    "nodemailer": "~0.6.0"
   },
   "devDependencies": {
     "grunt": "~0.4.2",
