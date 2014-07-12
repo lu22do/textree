@@ -1,23 +1,7 @@
 textr.ee
 forest
 
-yahoo.co.jp mail account (for fb developer account)
-------------------------
-fbdevtt@yahoo.co.jp
-zamiwila
-19780712
-belfort
-backup email: lu22do@gmail.com
 
-fb developer account
---------------------
-papi lola
-fbdevtt@yahoo.co.jp
-gamiwila1
-626040787
-app: textree
-App ID: 504465712996933
-App Secret: bc045ea8c74dbaba830854630a44d71d
 
 
 inspired by
