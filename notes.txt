@@ -1,0 +1,286 @@
+textr.ee
+forest
+
+yahoo.co.jp mail account (for fb developer account)
+------------------------
+fbdevtt@yahoo.co.jp
+zamiwila
+19780712
+belfort
+backup email: lu22do@gmail.com
+
+fb developer account
+--------------------
+papi lola
+fbdevtt@yahoo.co.jp
+gamiwila1
+626040787
+app: textree
+App ID: 504465712996933
+App Secret: bc045ea8c74dbaba830854630a44d71d
+
+
+inspired by
+- https://github.com/thomasdavis/backbonetutorials/tree/gh-pages/examples/nodejs-mongodb-mongoose-restify
+- SocialNetwork
+
+Node debugging (& jade debugging?)
+Try restify
+Try jeoman
+Setup in nodejitsu
+Need WYSWYG for html
+
+
+jquery cheat sheet:
+-------------------
+$(document).ready(function() {
+    $('div').mouseenter(function() {
+        $(this).fadeTo('fast', 1);
+    });
+    $('div').mouseleave(function() {
+        $(this).fadeTo('fast', 0.25);
+    });
+})
+
+mongolab
+--------
+nodejitsu_lu22do / naniwila1
+
+textree db access:
+mongodb://nodejitsu_lu22do:a7h73dr9eqgqr1bvsl9e1du63q@ds061558.mongolab.com:61558/nodejitsu_lu22do_nodejitsudb8073304907
+
+
+terminal setup
+--------------
+node --debug app.js 
+mongod
+mongo
+node-inspector --web-port=8081 &
+./node_modules/mocha/bin/mocha -R tap
+
+git 
+---
+status / diff
+add
+commit -a -m ‘xxxx’
+push origin master (see below for publication)
+push heroku master
+git remote
+git remote show xxx
+
+publication
+-----------
+grunt build
+git add
+git commit -a -m ‘xxxx’
+grunt push
+
+npm cheat sheet
+---------------
+npm init
+npm install <module> --save/--saveDep
+
+server:
+-------
+nodejs
+mongodb
+mongoose
+express
+jade
+cookie
+
+client:
+-------
+backbone js - MVC framework
+underscore js - utility lib for js
+require js - depency and AMD file loading
+jquery - utility lib for dom
+
+NODE_ENV=production node app -> use optimized version (excluding require.js)
+
+security
+--------
+
+
+loading
+-------
+index.jade -> require.js -> boot.js -> libs & Textree.js -> router.js -> views & models -> TextreeView.js (base view class)
+
+views
+-----
+
+TextreeView
+	addcontactView
+	contactsView
+	indexView
+	profileView
+	statusView
+forgotpasswordView
+loginView
+registerView
+
+abstractions
+------------
+a tree has nodes and branches (edges)
+nodes has a set of branches
+a branch is a piece of text (potentially with comments)
+
+apis
+----
+get
+/accounts/:id
+/accounts/:id/activity
+/accounts/:id/contacts
+/accounts/:id/trees
+/trees/:id
+/branches/:id
+(/branches/:id/details) -> /branches/:id/children
+
+post
+/register
+/login
+/logout
+/forgotPassword
+/resetPassword
+/accounts/:id/contact
+/contacts/find
+/trees
+/branches
+
+delete
+/accounts/:id/contact
+
+
+
+history
+-------
+
+
+
+
+
+Requirements
+------------
+Version 0.1 (pre-alpha deploy in house for first feedback):
+- One tree is made of branches (= piece of text)
+- One user has a set of contacts
+- It is possible to see one user’s activity
+- Search for user 
+- On Git
+- Branch like
+- Ant build script: jslint, combine, grunt, ...
+
+Version 0.2 (put online, very restricted):
+- bootstrap & responsive
+- advanced text edit, with edit button
+- several branches on same page (with tabs)
+- infinite tree scrolling
+
+Version 0.2.5:
+- logging
+- REST API unit tests
+- UI unit tests
+
+Version 0.3 (more open):
+- Add about
+- Privileges: One tree is owned/managed by one user - his contact can create branches
+- Define ergoflow/style rules and use them consistently
+- Optimize: 
+  - minimize view creation & server requests
+  - do not send password and other unneeded info
+- Logs
+- Robustify server
+- Admin UI to monitor server activity & db
+- More NPM modules?
+- Support request for adding friends (sending email)
+- Support email for passord retrieval
+- display children branch name and author (embed child branch info in response)
+- prevent others to edit owner’s branch
+- allow contact to create branch
+- delete branch 
+- delete branches when deleting tree
+
+Later:
+- Tree superview - Zoomable tree rendered on the right side (a bit like sublime) / 3D views
+- Permissions on tree (owner decides if the tree’s read/write access are open, restricted or private)
+- Search for tree
+- UI internationalization (en, fr, jp) 
+- Chat support
+- Dynamic event (socket.io) from server
+- Support comments (hidden by default)
+- Unit tests, esp. for heavy load and perf testing (ie for db access optimization)
+- Work on ipad (touch event), responsive
+- Color trails (color some branch on demand or by author)
+- Email notifications on specific changes (eg branch add to your tree) or simply site update
+- database backup, security
+- ... 
+
+In progress:
+- show branches in tabs (“+” to add new branch), support infinite scrolling 
+- focus on good reading experience
+- visualizer
+- full text editor (outputs in html) - using jqueryte (rather than bootstrap-wysihtml5)
+
+Todo:
+- several branches on same page (with tabs)
+- infinite tree scrolling
+- advanced text edit, with edit button
+
+- facebook login
+- REST API unit tests —> add to grunt? Makefile?
+- UI unit test plan
+- use jquery ajax promise
+- support browsing without logging in
+- analytics
+- Footer with about & help
+- Details on a tree: submit -> save, enter should submit
+- Fix activity when edit tree field
+- remove box when not editing, make it the size of the screen
+- error message on 404 (branch, tree)
+- support server upgrade without relogging
+- mocha/zombie unit tests 
+- internationalization js
+- restify?
+- sass, less
+- hapi, promise
+- good logging system e.g. logfmt, bunyan
+
+Done textree:
+- Start from Social network
+- Remove Status
+- Installed grunt in textree, configured it to run jshint
+- confirmation popup to delete tree
+- display logged user
+- contact full name
+- for a contact: do not show change password & contacts (do not send them)
+- customize my tree for contact’s trees
+- Add version & favicon
+- put on nodejitsu
+- requirejs optimization + uglify for production
+- Using modern form look
+- Simplified register form
+- Remove first/last name, just full name
+- Added button to change name
+- Make all content centered
+- Pre-fill Login after Signup
+- Check for already existing account (pseudo, mail) on signup
+- Remember email address
+- Do not allow to change contact’s name
+- Support empty branch name
+- Remove addnewtree from top bar & “Add new tree” button in “my trees”
+- After creating a tree, go directly to root branch
+- using bootstrap 
+
+
+Done learning/setup:
+- Installed jshint plugin in Sublime, configured it
+- Installed jeoman - yo, bower, grunt
+	launch some generator with yo
+- livereload setup
+- Used node-inpector
+  node-inspector --web-port=8081 &
+  node —debug xxx
+  in browser: http://127.0.0.1:8081/debug?port=5858
+- installed concat & uglify in grunt
+- did requirejs optimization
+
