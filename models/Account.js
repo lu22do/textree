@@ -234,16 +234,29 @@ module.exports = function(app, config, mongoose, nodemailer) {
   var removeTree = function(account, treeId, cb) {
     if (null === account.trees) return;
 
-    account.trees.forEach(function(tree) {
-      if ( tree == treeId ) {
+    var i;
+    for (i = 0; i < account.trees.length; i++) {
+      if (account.trees[i] == treeId) {
         account.trees.remove(tree);
+        break;
       }
-    });
-    account.save(function (err) {
+    }
+    if (i < account.trees.length) {
+      // successfully found and removed
+      account.save(function (err) {
+        if (err) {
+          console.log('[removeTree] Error saving account: ' + err);
+        }
+        if (cb) {
+          cb(err);
+        }
+      });      
+    }
+    else {
       if (cb) {
-        cb(err);
-      }
-    });
+        cb(new Error('Tree not found'));
+      }      
+    }
   };
 
   return {
