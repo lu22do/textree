@@ -1,48 +1,132 @@
-<% if (branch.parent) { %>
-<a href="#branch/<%= branch.parent %>">Go to parent</a></li>
-<% } %>
+<div class="col-md-9 textcolumn">
 
-<p>
-<div>
-	<% if (branch.parent) { %>
-	Title: <%= branch.title %>
-	<% } else { %>
-	Root branch
-	<% } %>
-</div>
+  <!-- Text editor -->
+  <div id="texteditor_container<%= branch.depth %>" style="display:none;">
 
-<textarea id='branch_text' style='width: 100%' rows="8"><%= branch.text %></textarea>
+    <div class="form-group form-inline">
+      <% if (branch.parent) { %>
+      Branch name: 
+      <input id="branch_title<%= branch.depth %>" class="form-control" type="text" value="<%= branch.title %>">
+      <% } else { %>
+      Root branch
+      <% } %>
+    </div>
 
-<% if (branch.author.accountId == loggedAccountId) { %>
-<a class="btn btn-default" id="deletebranch_button">Delete this branch</a>
+    <textarea id="texteditor<%= branch.depth %>" class="form-control" style="height: 100px"></textarea>
 
-<a class="btn btn-default" id="savebranch_button">Save Edits</a>
-<span id='save_branch_done'>Done</span>
-<% } %>
+    <% if (branch.author.accountId == loggedAccountId && branch.parent) { %>
+    <div class="btn-group-sm"  style="float: left; margin-top: 10px;">
+      <a class="btn btn-default" id="delete_branch_button<%= branch.depth %>">Delete this branch</a>
+    </div>
+    <% } %> 
 
-<p>
-<% if (children.length) { %>
-Children branches:
-<ul id='children_branch_list'>
-  <% _.each(children, function(childbranch) { %>
-    <li><a href="#branch/<%= childbranch._id %>"><%= childbranch.title %></a>
-    <% if (childbranch.author.accountId != loggedAccountId) { %>
-    (by <%= childbranch.author.pseudo %>)
-    <% } else { %>
-    (by me)
+    <div class="btn-group-sm"  style="float: right; margin-top: 10px;">
+      <a class="btn btn-default" id="save_branch_button<%= branch.depth %>">Save Edits</a>
+      <a class="btn btn-default" id="cancel_save_branch_button<%= branch.depth %>">Cancel</a>
+    </div>
+
+    <div style="clear: both;"></div>
+  </div>
+
+  <!-- Read-only text -->
+  <div id="text_container<%= branch.depth %>">
+    <!-- contenteditable="true" -->
+    <div id="text<%= branch.depth %>"><%= branch.text %></div>
+  </div>
+
+  <!-- Children -->
+  <% if (readingMode == 'branch_by_branch') { %>
+
+  <div id="children_container<%= branch.depth %>" style="font-size: 90%; margin-top: 100px; padding-top: 10px; border-top: 1px solid #F0F0F0;">
+
+    <% if (branch.parent) { %>
+      <a class="select_branch_button btn btn-default btn-sm" href="#" value="<%= branch.parent %>" style="float: right;">Go to parent</a>
     <% } %>
-    </li>
-  <% }); %>
-</ul>
-<% } %>
 
-<p>
+    <% if (children.length) { %>
+    Jump to branch:
+    <ul id='children_branch_list<%= branch.depth %>'>
+      <% _.each(children, function(childbranch) { %>
+      <li>
+        <a class="select_branch_button" href="#" value="<%= childbranch._id %>">
+        <%= childbranch.title %> 
+        <% if (childbranch.author.accountId != loggedAccountId) { %>
+        (by <%= childbranch.author.pseudo %>)
+        <% } else { %>
+        (by me)
+        <% } %>
+        </a>
+      </li>
+      <% }); %>
+    </ul>
+    <% } %>
 
-<form id='new_branch'>
-  <fieldset>
-    <label>Title:<input type="text" name="title" id="create_branch" placeholder="<%= branchDefaultName %>"/></label>
-    <input class="btn btn-default" type="submit" id="createbranch_button" value="Create child branch">
-  </fieldset>
-</form>
+    <a id="new_branch_button<%= branch.depth %>" class="btn btn-default btn-sm" role="button">
+    Create new child branch
+    </a>
+
+  </div> <!-- id="children_container<%= branch.depth %>" -->
+
+  <% } else { %>
+
+  <div id="children_container<%= branch.depth %>" style="display:none; font-size: 90%; margin-top: 10px;">
+
+    <% if (children.length) { %>
+    Branches:
+    <div id='children_branch_list<%= branch.depth %>'>
+      <% _.each(children, function(childbranch) { %>
+      <div class="radio" style="margin-bottom: 3px;">
+        <label>
+          <input class="select_branch_button" type="radio" name="optionsRadios<%= branch.depth %>" value="<%= childbranch._id %>"
+            <% if (childbranch.selected ) { %>
+            checked
+            <% } %>
+          >
+            <span>
+              <%= childbranch.title %>
+            </span>
+            <% if (childbranch.author.accountId != loggedAccountId) { %>
+            (by <%= childbranch.author.pseudo %>)
+            <% } else { %>
+            (by me)
+            <% } %>
+        </label>
+      </div>
+      <% }); %>
+    </div>
+    <% } %>
+
+    <a id="new_branch_button<%= branch.depth %>" href="#" role="button" data-toggle="tooltip" data-placement="right" title="Add a new child branch">
+      <span class="glyphicon glyphicon-plus"></span>
+    </a>
+
+  </div> <!-- id="children_container<%= branch.depth %>" -->
+
+  <% } %>
+
+</div> <!-- class="col-md-9 textcolumn" -->
+
+<!-- Right column with icons -->
+<div class="col-md-3">
+  <div class="btn-group-md">
+    
+    <!-- Save OK icon -->
+    <span id="save_ok<%= branch.depth %>" style="display: none;" class="glyphicon glyphicon-ok-circle"></span>
+
+    <!-- Edit icon -->
+    <a id="edit<%= branch.depth %>" style="display: none;" href="#" role="button" data-toggle="tooltip" data-placement="right" title="Edit this branch's tile and text">
+      <span class="glyphicon glyphicon-edit"></span>
+    </a>
+
+    <% if (readingMode != 'branch_by_branch') { %>
+
+    <!-- Branches icon -->
+    <a id="show_branches<%= branch.depth %>" style="display: none;" href="#" role="button" data-toggle="tooltip" data-placement="right" title="Show child branches">
+      <span class="glyphicon glyphicon-tree-conifer"></span>
+    </a>
+
+    <% } %>
+  </div>
+</div>
 
 <div id="popup"></div>

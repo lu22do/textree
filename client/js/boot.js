@@ -4,6 +4,7 @@ requirejs.config({
     'Underscore': 'libs/underscore',
     'Backbone': 'libs/backbone',
     'Bootstrap': 'libs/bootstrap.min',
+    'jquery-te': 'libs/jquery-te-1.4.0.min',
     'text': 'libs/text',
     'models': 'models',
     'templates': '../templates'

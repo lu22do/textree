@@ -92,4 +92,4 @@ app.get('/', function(req, res) {
 });
 
 app.server.listen(port);
-console.log('Textree server (v0.1.0) is listening to port ' + port + '.');
+console.log('Textree server (v' + pjson.version + ', ' + prod + ') is listening to port ' + port + '.');

@@ -69,7 +69,7 @@ module.exports = function(app, models) {
                   console.log('updateTree error:' + err);
                 }
                 models.Account.createActivity(account, 'BranchCreated', branch.title, branch._id, tree.name, tree._id, function(/*err*/) {
-                  res.send(200);
+                  res.send({id: branch._id})
                 });
               });
             }

@@ -36,6 +36,7 @@ module.exports = function(app, models) {
 
     var name = req.param('name');
     var description = req.param('description');
+    var readingMode = req.param('readingMode');
 
    // Missing name, don't bother going any further
     if (null === name) {
@@ -45,7 +46,7 @@ module.exports = function(app, models) {
 
     models.Account.findById(accountId, function(account) {
       if ( account ) {
-        models.Tree.createTree(name, description, account.pseudo, accountId, function(err, tree) {
+        models.Tree.createTree(name, description, account.pseudo, accountId, readingMode, function(err, tree) {
           if (err) {
             return console.log('Error creating tree: ' + err);
           }

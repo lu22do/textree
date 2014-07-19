@@ -1,53 +1,29 @@
-<h1>Details on a tree</h1>
-<table>
-  <!--tr>
-    <th>Field</th>
-    <th>Value</th>
-    <th>Edit</th>
-  </tr-->
-  <tr>
-    <td>Name</td>
-    <td>
-      <input type="text" name="name" value="<%= tree.get('name') %>" size=50 style="display:none">
-      <span id="name_ro"><%= tree.get('name') %></span>
-    </td>
-    <td>
-      <a id="edit_name_button" class="btn btn-default btn-sm">Edit</a>
-      <a id="submit_name_button" class="btn btn-default btn-sm" style="display:none">Submit</a>
-      <a id="cancel_name_button" class="btn btn-default btn-sm" style="display:none">Cancel</a>
-    </td>
-  </tr>
-  <tr>
-    <td>Description</td>
-    <td>
-      <input type="text" name="desc" value="<%= tree.get('description') %>" size=50 style="display:none">
-      <span id="desc_ro"><%= tree.get('description') %></span>
-    </td>
-    <td>
-      <a id="edit_desc_button" class="btn btn-default btn-sm">Edit</a>
-      <a id="submit_desc_button" class="btn btn-default btn-sm" style="display:none">Submit</a>
-      <a id="cancel_desc_button" class="btn btn-default btn-sm" style="display:none">Cancel</a>
-    </td>
-  </tr>
-  <tr>
-    <td>Author</td>
-    <td><a href="#profile/<%= tree.get('author').accountId %>"><%= tree.get('author').pseudo %></a></td>
-  </tr>
-  <tr>
-    <td>Creation date</td>
-    <td><%= cdate %>, <%= ctime %></td>
-  </tr>
-  <tr>
-    <td>Last update date</td>
-    <td><%= udate %>, <%= utime %></td>
-  </tr>
-  <tr>
-    <td>Number of branches</td>
-    <td><%= tree.get('nbBranches') %></td>
-  </tr>
-</table>
+<div class="row">
 
-<br>
-<a class="btn btn-default" href="#branch/<%= tree.get('rootBranch') %>">Jump to root branch</a>
-<a class="btn btn-default" id="delete_button">Delete this tree</a>
-<div id="popup"></div>
+  <!-- Vizualizer (foldable) -->
+  <div class="col-md-3">
+    <div id="treeinfo" style="width: 80%">
+      <h2><%= tree.get('name') %></h2>
+      <div class="btn-group-md" style="float: right;">
+        <a id="edittree" style="color: grey; display:none;" href="#treedetails/<%= tree.get('_id') %>" role="button">
+          <span class="glyphicon glyphicon-edit"></span>
+        </a>
+      </div>
+      <i>By <%= tree.get('author').pseudo %></i>
+      <hr>
+      <div id="description" style="display: none;">
+        <%= tree.get('description') %>
+      </div>
+      <br>
+      <br>   
+    </div>
+
+    <!-- Vizualizer will go here (in continuous reading mode only) -->
+  </div>
+
+  <div class="col-md-9" id="branchescolumn" style="padding-top: 30px">
+
+    <!-- Branches -->
+
+  </div> <!-- /col-md-9 -->
+</div> <!-- /row -->

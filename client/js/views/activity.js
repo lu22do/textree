@@ -34,15 +34,15 @@ define(['TextreeView', 'text!templates/activity.html'], function(TextreeView, ac
           text += '"' + name + '" tree deleted';
           break;
         case 'BranchCreated':
-          text += '"<a href="#branch/' + id + '">' + name + '</a>" branch of "<a href="#tree/' + 
+          text += '"<a href="#branch/' + id + '">' + name + '</a>" branch of "<a href="#treedetails/' + 
             id2 + '">' + name2 + '</a>" tree created';
           break;
         case 'BranchUpdated':
-          text += '"<a href="#branch/' + id + '">' + name + '</a>" branch of "<a href="#tree/' + 
+          text += '"<a href="#branch/' + id + '">' + name + '</a>" branch of "<a href="#treedetails/' + 
             id2 + '">' + name2 + '</a>" tree updated';
           break;
         case 'BranchDeleted':
-          text += '"' + name + '" branch of "<a href="#tree/' + 
+          text += '"' + name + '" branch of "<a href="#treedetails/' + 
             id2 + '">' + name2 + '</a>" tree deleted';
           break;
       }

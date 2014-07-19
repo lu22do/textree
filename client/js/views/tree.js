@@ -1,137 +1,106 @@
-define(['TextreeView', 'views/popup', 'text!templates/tree.html'], 
-       function(TextreeView, PopupView, treeTemplate) {
+define(['TextreeView', 'text!templates/tree.html', 'views/branch',
+        'models/BranchCollection', 'models/Branch'],
+       function(TextreeView, treeTemplate, BranchView,
+                BranchCollection, Branch) {
+  
+  function loadBranch(that, id, depth, selectedChildIndex) {
+    var branchModel = new Branch({id: id});
+    branchModel.url = '/api/branches/' + id;
+    branchModel.set("depth", depth);
+
+    that.curTree[depth] = branchModel;
+
+    var branchHtml = (new BranchView({ 
+      model: branchModel,
+      router: that.router, 
+      selectedChildIndex: selectedChildIndex,
+      readingMode: that.model.get('readingMode'),
+      treeView: that,
+    })).render().el;
+    $(branchHtml).appendTo('#branchescolumn');
+
+    branchModel.fetch();
+  }
+
   var treeView = TextreeView.extend({
     el: $('#content'),
-    
-    events: {
-      'click #edit_name_button': 'editNameField',
-      'click #submit_name_button': 'submitNameUpdate',
-      'click #cancel_name_button': 'cancelNameUpdate',
 
-      'click #edit_desc_button': 'editDescField',
-      'click #submit_desc_button': 'submitDescUpdate',
-      'click #cancel_desc_button': 'cancelDescUpdate',
-      
-      'click #delete_button': 'deleteTreePopup'
+    curTree: [],
+
+    events: {
     },
 
-    initialize: function(/*options*/) {
+    initialize: function(options) {
+      this.router = options.router;
+
       this.model.bind('change', this.update, this);
     },
 
+    // notification that a branch is loaded, let's load one child branch
+    branchLoaded: function(branch, selectedChildIndex) {
+      if (this.model.get('readingMode') == 'branch_by_branch') {
+        return;
+      }
+
+      var children = branch.get('children');
+      if (children.length === 0) {
+        return;
+      }
+
+      if (selectedChildIndex === undefined) {
+        selectedChildIndex = 0;
+      }
+
+      var firstChildId = children.at(selectedChildIndex).get('_id'); /* why _id and not id ? */
+
+      loadBranch(this, firstChildId, branch.get('depth') + 1, 0);
+    },
+
+    selectChildBranch: function(depth, childId) {
+      if (this.model.get('readingMode') == 'branch_by_branch') {
+        $('#branchescolumn').empty();
+      }
+      else {
+        var children = $('#branchescolumn').children();
+        for (var i = children.length - 1; i > depth; i--) {
+          children[i].remove();
+        }
+      }
+
+      loadBranch(this, childId, depth + 1, undefined);
+    },
+
+    reloadBranch: function(depth, id, selectedChildIndex) {
+      if (this.model.get('readingMode') == 'branch_by_branch') {
+        $('#branchescolumn').empty();
+      }
+      else {
+        var children = $('#branchescolumn').children();
+        for (var i = children.length - 1; i >= depth; i--) {
+          children[i].remove();
+        }
+      }
+
+      loadBranch(this, id, depth, selectedChildIndex);
+    },
+
     update: function() {
-      var cdate = new Date(this.model.get('date'));
-      var udate = new Date(this.model.get('updateDate'));
-      this.$el.html(_.template(treeTemplate, {tree: this.model, 
-                                              cdate: cdate.toLocaleDateString(), ctime: cdate.toLocaleTimeString(),
-                                              udate: udate.toLocaleDateString(), utime: udate.toLocaleTimeString()}));
+      this.$el.html(_.template(treeTemplate, {tree: this.model})); 
+
+      $('#treeinfo').hover(function(e) {
+        $('#edittree').show();
+        $('#description').fadeIn();
+      }, function(e) {
+        $('#edittree').hide();
+        $('#description').fadeOut();
+      });
+
+      loadBranch(this, this.model.get('rootBranch'), 0, 0);
     },
 
     render: function() {
     },
 
-    editNameField: function() {
-      this.dismissPopup();
-      $('input[name=name]').show();
-      $('#name_ro').hide();
-      $('#edit_name_button').hide();
-      $('#submit_name_button').show();
-      $('#cancel_name_button').show();
-    },
-
-    cancelNameUpdate: function() {
-      $('input[name=name]').hide();
-      $('#name_ro').show();
-      $('#edit_name_button').show();
-      $('#submit_name_button').hide();
-      $('#cancel_name_button').hide();
-    },
-
-    submitNameUpdate: function() {
-      $('#name_ro').text($('input[name=name]').val());
-      this.cancelNameUpdate();
-      $.ajax(
-        '/api/trees/' + this.model.get('_id'), 
-        {
-          type: 'PUT',
-          data: {
-            name: $('input[name=name]').val(),
-          }, 
-          success: function() {
-            console.log('update success');
-          },
-          error: function() {
-            alert('Could not create tree');
-          }
-        }
-      );  
-    },
-
-    editDescField: function() {
-      this.dismissPopup();
-      $('input[name=desc]').show();
-      $('#desc_ro').hide();
-      $('#edit_desc_button').hide();
-      $('#submit_desc_button').show();
-      $('#cancel_desc_button').show();
-    },
-
-    cancelDescUpdate: function() {
-      $('input[name=desc]').hide();
-      $('#desc_ro').show();
-      $('#edit_desc_button').show();
-      $('#submit_desc_button').hide();
-      $('#cancel_desc_button').hide();
-    },
-
-    submitDescUpdate: function() {
-      $('#desc_ro').text($('input[name=desc]').val());
-      this.cancelDescUpdate();
-      $.ajax(
-        '/api/trees/' + this.model.get('_id'), 
-        {
-          type: 'PUT',
-          data: {
-            description: $('input[name=desc]').val(),
-          }, 
-          success: function() {
-          },
-          error: function() {
-            alert('Could not create tree');
-          }
-        }
-      );  
-      return false;
-    },
-
-    deleteTree: function() {      
-      $.ajax(
-        '/api/trees/' + this.model.get('_id'), 
-        {
-          type: 'DELETE', 
-          success: function() {
-            window.location.hash = 'treelist/me';
-          },
-          error: function() {
-            alert('Could not delete tree');
-        }
-      });
-    },
-
-    deleteTreePopup: function() {
-      var that = this;
-      if (!this.popup) {
-        this.popup = new PopupView({el: $('#popup'), text: 'Are you sure?', confirmButtons: true, cb: function() {
-            that.deleteTree.apply(that);
-          }});
-      }
-      this.popup.render();
-    }, 
-
-    dismissPopup: function() {
-      $('#popup').hide();
-    }
   });
-
   return treeView;
 });

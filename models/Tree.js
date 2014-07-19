@@ -22,6 +22,7 @@ module.exports = function(app, config, mongoose) {
       pseudo: {type: String},
       accountId: {type: Schema.ObjectId},
     },
+    readingMode: String, // "continuous" or "branch_by_branch"
     date: Date, // creation date
     updateDate: Date,
     nbBranches: Number, // not including root branch
@@ -30,7 +31,7 @@ module.exports = function(app, config, mongoose) {
 
   var Tree = mongoose.model('Tree', TreeSchema); 
 
-  var createTree = function(name, description, pseudo, accountId, cb) {
+  var createTree = function(name, description, pseudo, accountId, readingMode, cb) {
     console.log('createTree ' + name + '+ pseudo ' + pseudo);
     
     var rootBranch = new Branch({
@@ -61,6 +62,7 @@ module.exports = function(app, config, mongoose) {
           pseudo: pseudo,
           accountId: accountId
         },
+        readingMode: readingMode,
         date: date,
         updateDate: date,
         nbBranches: 0,

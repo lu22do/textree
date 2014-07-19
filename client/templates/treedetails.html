@@ -1,0 +1,80 @@
+<h1>Details on a tree</h1>
+<table>
+  <!--tr>
+    <th>Field</th>
+    <th>Value</th>
+    <th>Edit</th>
+  </tr-->
+  <tr>
+    <td class="itemTitle">Name</td>
+    <td>
+      <div style="float:right">
+        <a id="edit_name_button" class="btn btn-default btn-sm">Edit</a>
+        <a id="submit_name_button" class="btn btn-default btn-sm" style="display:none">Save</a>
+        <a id="cancel_name_button" class="btn btn-default btn-sm" style="display:none">Cancel</a>
+      </div>
+      <input type="text" name="name" value="<%= tree.get('name') %>" size=50 style="display:none">
+      <span id="name_ro"><%= tree.get('name') %></span>
+    </td>
+  </tr>
+  <tr>
+    <td class="itemTitle">Description</td>
+    <td>
+      <div style="float:right">
+        <a id="edit_desc_button" class="btn btn-default btn-sm">Edit</a>
+        <a id="submit_desc_button" class="btn btn-default btn-sm" style="display:none">Save</a>
+        <a id="cancel_desc_button" class="btn btn-default btn-sm" style="display:none">Cancel</a>
+      </div>
+      <input type="text" name="desc" value="<%= tree.get('description') %>" size=50 style="display:none">
+      <span id="desc_ro"><%= tree.get('description') %></span>
+    </td>
+  </tr>
+  <tr>
+    <td class="itemTitle">Author</td>
+    <td><a href="#profile/<%= tree.get('author').accountId %>"><%= tree.get('author').pseudo %></a></td>
+  </tr>
+  <tr>
+    <td class="itemTitle">Reading mode</td>
+    <td>
+      <div id="reading_mode_buttons" class="btn-group" data-toggle="buttons">
+        <label id="continuous_button" class="btn btn-default active">
+          <input type="radio" name="options"  checked> Continuous mode
+        </label>
+        <label  id="branch_by_branch_button" class="btn btn-default">
+          <input type="radio" name="options"> Branch by branch
+        </label>
+
+
+
+<!--       <% if (tree.get('readingMode') === 'branch_by_branch') { %>
+        <button id="continuous_button" type="button" class="btn btn-default">Continuous mode</button>
+        <button id="branch_by_branch_button" type="button" class="btn btn-default active">Branch by branch</button>
+      <% } else { %>
+        <button id="continuous_button" type="button" class="btn btn-default active">Continuous mode</button>
+        <button id="branch_by_branch_button" type="button" class="btn btn-default">Branch by branch</button>
+      <% } %>
+ -->      </div>
+    </td>
+  </tr>
+  <tr>
+    <td class="itemTitle">Creation date</td>
+    <td><%= cdate %>, <%= ctime %></td>
+  </tr>
+  <tr>
+    <td class="itemTitle">Last update date</td>
+    <td><%= udate %>, <%= utime %></td>
+  </tr>
+  <tr>
+    <td class="itemTitle">Number of branches</td>
+    <td><%= tree.get('nbBranches') %></td>
+  </tr>
+</table>
+
+<br>
+<a class="btn btn-default" href="#tree/<%= tree.get('_id') %>">Jump to tree</a>
+
+<% if (tree.get('author').accountId == loggedAccountId) { %>
+<a class="btn btn-default" id="delete_button">Delete this tree</a>
+<% } %>
+
+<div id="popup"></div>

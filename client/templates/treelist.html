@@ -15,15 +15,17 @@ No trees
       <th>Author</th>
   <% } %> 
   <% if (complete) { %>
-      <th>Creation</th>
-      <th>Last update</th>
+      <th style="width:120px">Creation</th>
+      <th style="width:120px">Last update</th>
       <th>Nb of branches</th>
       <th>Details</th>
   <% } %> 
     </tr>
     <% treecoll.each(function(tree) { %>
     <tr>
-      <td><a href="#branch/<%= tree.get('rootBranch') %>"><%= tree.get('name') %></a></td>
+      <td>
+        <a href="#tree/<%= tree.get('_id') %>"><%= tree.get('name') %></a>
+      </td>
       <td><%= tree.get('description') %></td>
   <% if (withAuthor) { %>
       <td><a href="#profile/<%= tree.get('author').accountId %>"><%= tree.get('author').pseudo %></a></td>
@@ -35,7 +37,7 @@ No trees
       <td><%= udate.toLocaleDateString() + " " + udate.toLocaleTimeString() %></td>
       <td><%= tree.get('nbBranches') %></td>
       <td>
-        <a class="btn btn-default btn-sm" href="#tree/<%= tree.get('_id') %>">Details</a>
+        <a class="btn btn-default btn-sm" href="#treedetails/<%= tree.get('_id') %>">Details</a>
       </td>
   <% } %> 
     </tr>

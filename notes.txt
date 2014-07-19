@@ -87,6 +87,11 @@ loading
 -------
 index.jade -> require.js -> boot.js -> libs & Textree.js -> router.js -> views & models -> TextreeView.js (base view class)
 
+backbone issue
+--------------
+why can't load a model which include a collection (of children)?
+why need 2 REST call?
+
 views
 -----
 
@@ -131,6 +136,9 @@ post
 delete
 /accounts/:id/contact
 
+Test cases
+----------
+check that you cannot delete someone else's tree
 
 
 history
@@ -152,10 +160,9 @@ Version 0.1 (pre-alpha deploy in house for first feedback):
 - Ant build script: jslint, combine, grunt, ...
 
 Version 0.2 (put online, very restricted):
-- bootstrap & responsive
+- bootstrap & somewhat responsive
 - advanced text edit, with edit button
-- several branches on same page (with tabs)
-- infinite tree scrolling
+- complete tree on one page (with way to switch branches)
 
 Version 0.2.5:
 - logging
@@ -196,19 +203,23 @@ Later:
 - database backup, security
 - ... 
 
+------------
+
 In progress:
-- show branches in tabs (“+” to add new branch), support infinite scrolling 
-- focus on good reading experience
-- visualizer
-- full text editor (outputs in html) - using jqueryte (rather than bootstrap-wysihtml5)
+- full tree loaded & not textedit enabled by default (smooth reading experience)
+- show branches small menu (“+” to add new branch) 
+- text edit with edit button
 
 Todo:
-- several branches on same page (with tabs)
-- infinite tree scrolling
-- advanced text edit, with edit button
+- view branch by branch
+
+
+Todo then:
+- support graph rather than tree
 - upgrade to latest libs / update package.json
 - backup/restore mongo, sanity check
-
+- full text editor (outputs in html) - using jqueryte (rather than bootstrap-wysihtml5)
+- when changing branch: flip
 - facebook login
 - REST API unit tests —> add to grunt? Makefile?
 - UI unit test plan
@@ -254,6 +265,7 @@ Done textree:
 - After creating a tree, go directly to root branch
 - using bootstrap 
 - using connect-mongo (instead of MemoryStore) to store sessions in Mongodb
+- prevent other to delete tree they don't own
 
 Done learning/setup:
 - Installed jshint plugin in Sublime, configured it

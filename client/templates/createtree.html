@@ -1,8 +1,38 @@
-<form class="center" id="createtree_form">
-  <fieldset>
-    <legend>Create a new tree</legend>
-    Name<input type="text" name="name"><br>
-    Description<textarea rows=6 cols=50 name="description"></textarea><br>         
-  </fieldset>
-  <input class="btn btn-default" type="submit" id="createtree_button" value="Submit">
-</form>
+<div class="center">
+  <p class="error" id="invalid_input_error">Name required! Please try again.</p>
+
+	<form id="createtree_form">
+	  <fieldset>
+	    <legend>Create a new tree</legend>
+
+			<div class="form-group">
+		    <label>Name</label>
+		    <input class="form-control" type="text" name="name">
+		  </div>
+
+			<div class="form-group">
+		    <label>Description</label>
+				<textarea class="form-control" rows=6 cols=50 name="description"></textarea><br>         
+		  </div>
+
+			<div class="form-group">
+		    <label>Reading mode</label>
+
+				<div class="radio">
+				  <label>
+				    <input type="radio" name="reading_mode" id="optionsRadios1" value="continuous" checked>
+				    Continuous reading (default)
+				  </label>
+				</div>
+				<div class="radio">
+				  <label>
+				    <input type="radio" name="reading_mode" id="optionsRadios2" value="branch_by_branch">
+						Branch by branch
+				  </label>
+				</div>
+		  </div>
+	  </fieldset>
+	 	<br/> 
+	  <input class="btn btn-default" type="submit" id="createtree_button" value="Submit">
+	</form>
+</div>

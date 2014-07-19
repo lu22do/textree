@@ -1,8 +1,9 @@
 define(['TextreeView', 'views/index', 'views/register', 'views/login', 'views/forgotpassword', 'views/profile', 
-  'views/contacts', 'views/addcontact', 'views/createtree', 'views/treelist', 'views/topbar', 'views/branch', 'views/tree',
+  'views/contacts', 'views/addcontact', 'views/createtree', 'views/treelist', 'views/topbar', 'views/branch', 'views/treedetails',
+  'views/tree',
   'models/Account', 'models/ActivityCollection', 'models/ContactCollection', 'models/Tree', 'models/TreeCollection', 'models/Branch'],
   function(TextreeView, IndexView, RegisterView, LoginView, ForgotPasswordView, ProfileView, ContactsView, AddContactView, 
-    CreateTreeView, TreeListView, TopbarView, BranchView, TreeView,
+    CreateTreeView, TreeListView, TopbarView, BranchView, TreeDetailsView, TreeView,
     Account, ActivityCollection, ContactCollection, Tree, TreeCollection, Branch) {
   var topbarView = new TopbarView();
 
@@ -26,8 +27,8 @@ define(['TextreeView', 'views/index', 'views/register', 'views/login', 'views/fo
       'treelist/:id/:authorpseudo': 'treelist',
       'profile/:id': 'profile',
       'contacts/:id': 'contacts',
-      'tree/:id': 'tree',
-      'branch/:id': 'branch'
+      'treedetails/:id': 'treedetails',
+      'tree/:id': 'tree'      
     },
 
     changeView: function(view, TopbarLink) {
@@ -77,7 +78,7 @@ define(['TextreeView', 'views/index', 'views/register', 'views/login', 'views/fo
     },
 
     createtree: function() {
-      this.changeView(new CreateTreeView(), '');
+      this.changeView(new CreateTreeView(), 'mytrees');
     },
 
     addcontact: function() {
@@ -122,21 +123,21 @@ define(['TextreeView', 'views/index', 'views/register', 'views/login', 'views/fo
       contactsCollection.fetch({reset: true});
     },
 
-    tree: function(id) {
+    treedetails: function(id) {
       var model = new Tree({id: id});
-      this.changeView(new TreeView({
-        model: model
-      }), 'tree');
+      this.changeView(new TreeDetailsView({
+        model: model,
+        router: this
+      }), 'treedetails');
       model.fetch();
     },
 
-    branch: function(id) {
-      var model = new Branch({id: id});
-      model.url = '/api/branches/' + id;
-      this.changeView(new BranchView({
+    tree: function(id) {
+      var model = new Tree({id: id});
+      this.changeView(new TreeView({
         model: model,
         router: this
-      }), 'branch');
+      }), 'tree');
       model.fetch();
     },
 
