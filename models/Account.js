@@ -234,15 +234,17 @@ module.exports = function(app, config, mongoose, nodemailer) {
   var removeTree = function(account, treeId, cb) {
     if (null === account.trees) return;
 
-    var i;
-    for (i = 0; i < account.trees.length; i++) {
+    var found = false;
+
+    for (var i = 0; i < account.trees.length; i++) {
       if (account.trees[i] == treeId) {
-        account.trees.remove(tree);
+        account.trees.splice(i, 1);
+        found = true;
         break;
       }
     }
-    if (i < account.trees.length) {
-      // successfully found and removed
+
+    if (found) {
       account.save(function (err) {
         if (err) {
           console.log('[removeTree] Error saving account: ' + err);
