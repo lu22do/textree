@@ -222,11 +222,7 @@ In progress:
 - text edit with edit button
 
 Todo:
-- click on title to jump to beginning
-- author name not part of link
-- increase branch name field
-- remove logs
-- about page
+
 
 Todo then:
 - support graph rather than tree
@@ -280,6 +276,11 @@ Done textree:
 - using bootstrap 
 - using connect-mongo (instead of MemoryStore) to store sessions in Mongodb
 - prevent other to delete tree they don't own
+- click on title to jump to beginning
+- author name not part of link
+- increase branch name field
+- remove logs
+- about & help pages
 
 Done learning/setup:
 - Installed jshint plugin in Sublime, configured it
