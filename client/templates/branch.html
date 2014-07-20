@@ -5,8 +5,16 @@
 
     <div class="form-group form-inline">
       <% if (branch.parent) { %>
-      Branch name: 
-      <input id="branch_title<%= branch.depth %>" class="form-control" type="text" value="<%= branch.title %>">
+      <table style="width: 100%; margin-bottom: 20px;">
+        <tr>
+          <td>
+            Branch&nbsp;name:&nbsp;
+          </td>
+          <td style="width: 100%;">
+            <input id="branch_title<%= branch.depth %>" class="form-control" type="text" value="<%= branch.title %>" style="width: 100%;">
+          </td>
+        </tr>
+      </table>
       <% } else { %>
       Root branch
       <% } %>
@@ -35,7 +43,7 @@
   </div>
 
   <!-- Children -->
-  <% if (readingMode == 'branch_by_branch') { %>
+  <% if (readingMode === 'branch_by_branch') { %>
 
   <div id="children_container<%= branch.depth %>" style="font-size: 90%; margin-top: 100px; padding-top: 10px; border-top: 1px solid #F0F0F0;">
 
@@ -50,12 +58,12 @@
       <li>
         <a class="select_branch_button" href="#" value="<%= childbranch._id %>">
         <%= childbranch.title %> 
+        </a>
         <% if (childbranch.author.accountId != loggedAccountId) { %>
         (by <%= childbranch.author.pseudo %>)
         <% } else { %>
         (by me)
         <% } %>
-        </a>
       </li>
       <% }); %>
     </ul>

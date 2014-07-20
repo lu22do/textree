@@ -28,6 +28,7 @@ define(['TextreeView', 'text!templates/tree.html', 'views/branch',
     curTree: [],
 
     events: {
+      'click #treetop': 'jumpToTop'
     },
 
     initialize: function(options) {
@@ -82,6 +83,10 @@ define(['TextreeView', 'text!templates/tree.html', 'views/branch',
       }
 
       loadBranch(this, id, depth, selectedChildIndex);
+    },
+
+    jumpToTop: function() {
+      this.reloadBranch(0, this.model.get('rootBranch'));
     },
 
     update: function() {

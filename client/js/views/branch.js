@@ -149,7 +149,7 @@ define(['TextreeView', 'views/popup', 'text!templates/branch.html', 'models/Bran
 
     saveBranch: function() {
       var depth = this.model.get('depth');
-      console.log('updating: ' + $('#texteditor' + depth).val());
+//      console.log('updating: ' + $('#texteditor' + depth).val());
       var htmlText = convertTexttoHTML($('#texteditor' + depth).val());
       var that = this;
 

@@ -3,7 +3,11 @@
   <!-- Vizualizer (foldable) -->
   <div class="col-md-3">
     <div id="treeinfo" style="width: 80%">
+      <% if (tree.get('readingMode') === 'branch_by_branch') { %>    
+      <h2><a id="treetop" href="#" style="text-decoration: none; color: black;"><%= tree.get('name') %></a></h2>
+      <% } else { %>
       <h2><%= tree.get('name') %></h2>
+      <% } %>
       <div class="btn-group-md" style="float: right;">
         <a id="edittree" style="color: grey; display:none;" href="#treedetails/<%= tree.get('_id') %>" role="button">
           <span class="glyphicon glyphicon-edit"></span>

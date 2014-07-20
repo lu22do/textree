@@ -69,7 +69,7 @@ define(['TextreeView', 'views/popup', 'text!templates/treedetails.html'],
             name: $('input[name=name]').val(),
           }, 
           success: function() {
-            console.log('update success');
+//            console.log('update success');
           },
           error: function() {
             alert('Could not create tree');
@@ -143,7 +143,7 @@ define(['TextreeView', 'views/popup', 'text!templates/treedetails.html'],
             readingMode: readingMode,
           }, 
           success: function() {
-            console.log('update success');
+//            console.log('update success');
           },
           error: function() {
             alert('Could not update tree');

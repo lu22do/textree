@@ -5,19 +5,19 @@ My profile
 <%= user.get('pseudo') %>'s profile
 <% } %>
 </h1>
-<table>
+<table class="table" style="width: auto;">
   <tr>
-    <td>Pseudo</td>
+    <td class="itemTitle">Pseudo</td>
     <td><%= user.get('pseudo') %></a></td>
   </tr>
   
   <tr>
-    <td>Email</td>
+    <td class="itemTitle">Email</td>
     <td><%= user.get('email') %></td>
   </tr>
   
   <tr>
-    <td>Name</td>
+    <td class="itemTitle">Name</td>
     <td>
       <span id="name_ro"><%= user.get('name') %></span>
 
@@ -35,7 +35,7 @@ My profile
     
   <% if (myprofile) { %>
   <tr>
-    <td>Password</td>
+    <td class="itemTitle">Password</td>
     <td id="password">
       <a id="change_button" class="btn btn-default btn-sm">Change password</a>
       <a id="submit_button" class="btn btn-default btn-sm" style="display:none">Submit</a>
@@ -45,7 +45,7 @@ My profile
   <% } %>
 
   <tr>
-    <td>Trees</td>
+    <td class="itemTitle">Trees</td>
     <td>
       <% var trees = user.get('trees'); var nbTrees = trees ? trees.length : 0; %>
       <% if (myprofile) { %>
@@ -57,7 +57,7 @@ My profile
   </tr>
 
   <tr>
-    <td>Contacts</td>
+    <td class="itemTitle">Contacts</td>
     <td>
       <% var contacts = user.get('contacts'); nbContacts = contacts ? contacts.length : ''; %>
       <% if (myprofile) { %>

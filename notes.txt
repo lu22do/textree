@@ -1,5 +1,6 @@
 textr.ee
 forest
+text graph
 
 inspired by
 - https://github.com/thomasdavis/backbonetutorials/tree/gh-pages/examples/nodejs-mongodb-mongoose-restify
@@ -10,7 +11,6 @@ Try restify
 Try jeoman
 Setup in nodejitsu
 Need WYSWYG for html
-
 
 jquery cheat sheet:
 -------------------
@@ -39,8 +39,8 @@ mongo
 node-inspector --web-port=8081 &
 ./node_modules/mocha/bin/mocha -R tap
 
-git 
----
+git cheat sheet 
+---------------
 status / diff
 add
 commit -a -m ‘xxxx’
@@ -48,6 +48,17 @@ push origin master (see below for publication)
 push heroku master
 git remote
 git remote show xxx
+
+branches:
+create: 
+ git branch <branch>
+switch to: 
+ git checkout <branch> 
+merge:
+ git checkout master
+ git merge <branch>
+delete:
+ git branch -d <branch>
 
 publication
 -----------
@@ -139,7 +150,7 @@ delete
 Test cases
 ----------
 check that you cannot delete someone else's tree
-
+check reset passwd
 
 history
 -------
@@ -211,8 +222,11 @@ In progress:
 - text edit with edit button
 
 Todo:
-- view branch by branch
-
+- click on title to jump to beginning
+- author name not part of link
+- increase branch name field
+- remove logs
+- about page
 
 Todo then:
 - support graph rather than tree

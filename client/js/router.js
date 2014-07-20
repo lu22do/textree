@@ -1,9 +1,9 @@
 define(['TextreeView', 'views/index', 'views/register', 'views/login', 'views/forgotpassword', 'views/profile', 
   'views/contacts', 'views/addcontact', 'views/createtree', 'views/treelist', 'views/topbar', 'views/branch', 'views/treedetails',
-  'views/tree',
+  'views/tree', 'views/about', 'views/help',
   'models/Account', 'models/ActivityCollection', 'models/ContactCollection', 'models/Tree', 'models/TreeCollection', 'models/Branch'],
   function(TextreeView, IndexView, RegisterView, LoginView, ForgotPasswordView, ProfileView, ContactsView, AddContactView, 
-    CreateTreeView, TreeListView, TopbarView, BranchView, TreeDetailsView, TreeView,
+    CreateTreeView, TreeListView, TopbarView, BranchView, TreeDetailsView, TreeView, AboutView, HelpView,
     Account, ActivityCollection, ContactCollection, Tree, TreeCollection, Branch) {
   var topbarView = new TopbarView();
 
@@ -21,6 +21,8 @@ define(['TextreeView', 'views/index', 'views/register', 'views/login', 'views/fo
 
       // with topbar links (extend TextreeView):
       'index': 'index',
+      'about': 'about',
+      'help': 'help',
       'createtree': 'createtree',
       'addcontact': 'addcontact',
       'treelist/:id': 'treelist',
@@ -62,6 +64,16 @@ define(['TextreeView', 'views/index', 'views/register', 'views/login', 'views/fo
       activityCollection.fetch();
       myTreeCollection.fetch({reset: true});
       otherTreeCollection.fetch({reset: true});
+    },
+
+    about: function() {
+      this.changeView(new AboutView({
+      }), 'about');
+    },
+
+    help: function() {
+      this.changeView(new HelpView({
+      }), 'help');
     },
 
     treelist: function(id, authorpseudo) {
