@@ -19,6 +19,7 @@ Text branches can be created by the tree owner and his contacts/friends.
 - underscore js
 - require js 
 - jquery 
+- bootstrap CSS framework
 
 ## License
 MIT License

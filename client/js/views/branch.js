@@ -39,13 +39,13 @@ define(['TextreeView', 'views/popup', 'text!templates/branch.html', 'models/Bran
     // el: $('#content'),
 
     requestColl: false,
-    selectedChildIndex: undefined,
 
     initialize: function(options) {
       this.router = options.router;
       this.selectedChildIndex = options.selectedChildIndex;
       this.readingMode = options.readingMode;
       this.treeView = options.treeView;
+      this.showChildBranches = options.showChildBranches;
 
       if (this.selectedChildIndex === undefined) {
         this.selectedChildIndex = 0;
@@ -140,6 +140,10 @@ define(['TextreeView', 'views/popup', 'text!templates/branch.html', 'models/Bran
       if (this.model.get('text') === null || this.model.get('text') === '') {
         _toggleEditor(this.readingMode, depth);
       }
+
+      if (this.showChildBranches) {
+        $('#children_container' + depth).show(); 
+      }
     },
 
     render: function() {
@@ -231,11 +235,12 @@ define(['TextreeView', 'views/popup', 'text!templates/branch.html', 'models/Bran
         title: title,
         text: ''
       }, function(data) {
-        if (that.readingMode != 'branch_by_branch') {
+        if (that.readingMode !== 'branch_by_branch') {
           that.treeView.reloadBranch.call(that.treeView,
                                           depth,
                                           that.model.get('id'),
-                                          that.model.get('children').length);
+                                          that.model.get('children').length,
+                                          true /* showChildBranches */);
         }
         else {
           that.treeView.selectChildBranch.call(that.treeView, 

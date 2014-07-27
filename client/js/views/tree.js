@@ -3,7 +3,7 @@ define(['TextreeView', 'text!templates/tree.html', 'views/branch',
        function(TextreeView, treeTemplate, BranchView,
                 BranchCollection, Branch) {
   
-  function loadBranch(that, id, depth, selectedChildIndex) {
+  function loadBranch(that, id, depth, selectedChildIndex, showChildBranches) {
     var branchModel = new Branch({id: id});
     branchModel.url = '/api/branches/' + id;
     branchModel.set("depth", depth);
@@ -14,6 +14,7 @@ define(['TextreeView', 'text!templates/tree.html', 'views/branch',
       model: branchModel,
       router: that.router, 
       selectedChildIndex: selectedChildIndex,
+      showChildBranches: showChildBranches,
       readingMode: that.model.get('readingMode'),
       treeView: that,
     })).render().el;
@@ -71,7 +72,7 @@ define(['TextreeView', 'text!templates/tree.html', 'views/branch',
       loadBranch(this, childId, depth + 1, undefined);
     },
 
-    reloadBranch: function(depth, id, selectedChildIndex) {
+    reloadBranch: function(depth, id, selectedChildIndex, showChildBranches) {
       if (this.model.get('readingMode') == 'branch_by_branch') {
         $('#branchescolumn').empty();
       }
@@ -82,7 +83,7 @@ define(['TextreeView', 'text!templates/tree.html', 'views/branch',
         }
       }
 
-      loadBranch(this, id, depth, selectedChildIndex);
+      loadBranch(this, id, depth, selectedChildIndex, showChildBranches);
     },
 
     jumpToTop: function() {

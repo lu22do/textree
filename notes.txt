@@ -149,7 +149,8 @@ delete
 
 Test cases
 ----------
-check that you cannot delete someone else's tree
+check that you cannot edit/delete someone else's tree
+check that you cannot edit/delete someone else's branch
 check reset passwd
 
 history
@@ -159,95 +160,101 @@ history
 
 
 
-Requirements
-------------
-Version 0.1 (pre-alpha deploy in house for first feedback):
+Requirements & roadmap
+----------------------
+Version 0.1 (pre-alpha deploy in house for first feedback) - DONE
 - One tree is made of branches (= piece of text)
 - One user has a set of contacts
 - It is possible to see one user’s activity
 - Search for user 
 - On Git
-- Branch like
-- Ant build script: jslint, combine, grunt, ...
+- Minified version & ant build script (jslint, combine, grunt, ...)
+- Support delete branch 
 
-Version 0.2 (put online, very restricted):
-- bootstrap & somewhat responsive
+Version 0.2 (put online, very restricted) - DONE
+- modern look (bootstrap) & somewhat responsive
 - advanced text edit, with edit button
 - complete tree on one page (with way to switch branches)
-
-Version 0.2.5:
-- logging
-- REST API unit tests
-- UI unit tests
+- about & help
 
 Version 0.3 (more open):
-- Add about
-- Privileges: One tree is owned/managed by one user - his contact can create branches
+- Add blog? (or just update 'About')
+- Basic 2D vizualizer
+  - Tree superview - Zoomable tree rendered on the right side (a bit like sublime) / 3D views
+- Logging
+- Robustify server
+  - REST API unit tests
+- UI unit tests
+- DB backup
+- Permissions: One tree is owned/managed by one user - his contact can create branches
+  - Permissions on tree (owner decides if the tree’s read/write access are open, restricted or private)
+  - prevent others to edit owner’s branch
+  - allow contact to create branch
+- Email 
+  - Send email request when trying to add a friend
+  - Support email for passord retrieval
+  - Email notifications on activity
+- Less geeky activity report
 - Define ergoflow/style rules and use them consistently
 - Optimize: 
   - minimize view creation & server requests
   - do not send password and other unneeded info
-- Logs
-- Robustify server
 - Admin UI to monitor server activity & db
-- More NPM modules?
-- Support request for adding friends (sending email)
-- Support email for passord retrieval
-- display children branch name and author (embed child branch info in response)
-- prevent others to edit owner’s branch
-- allow contact to create branch
-- delete branch 
+- Clear NPM modules dependencies
 - delete branches when deleting tree
+- Work on ipad (touch event), responsive
+- Legal more clear
 
 Later:
-- Tree superview - Zoomable tree rendered on the right side (a bit like sublime) / 3D views
-- Permissions on tree (owner decides if the tree’s read/write access are open, restricted or private)
 - Search for tree
 - UI internationalization (en, fr, jp) 
-- Chat support
+- Chat support - simultaneous collaborative work
 - Dynamic event (socket.io) from server
 - Support comments (hidden by default)
 - Unit tests, esp. for heavy load and perf testing (ie for db access optimization)
-- Work on ipad (touch event), responsive
 - Color trails (color some branch on demand or by author)
-- Email notifications on specific changes (eg branch add to your tree) or simply site update
-- database backup, security
+- Security review
 - ... 
+
+TBD:
+- Option to prevent creation of subbranches that are not from tree author OR not on the main trunk 
+- Support for virtual links
+
 
 ------------
 
-In progress:
-- full tree loaded & not textedit enabled by default (smooth reading experience)
-- show branches small menu (“+” to add new branch) 
-- text edit with edit button
-
 Todo:
-
+- Version 0.2.1
+- Do not allow edit of tree not owned
+- Do not allow edit/detele of branch not owned
+- Fix activity links (tree & branch)
+- Do not hide parent's branches when creating a new one
 
 Todo then:
-- support graph rather than tree
+- move branch icon to bottom
+- Add "Recent activity on my trees (by others)"
+- Support email notifications
+- responsive iOS/Android tablet/phone
+- support graph rather than tree or just links?
+- jump to branch from activity for continuous mode / long text tree 
 - upgrade to latest libs / update package.json
 - backup/restore mongo, sanity check
 - full text editor (outputs in html) - using jqueryte (rather than bootstrap-wysihtml5)
-- when changing branch: flip
+- when changing branch: animation (eg flip)
 - facebook login
 - REST API unit tests —> add to grunt? Makefile?
-- UI unit test plan
-- use jquery ajax promise
+- UI unit test (mocha/zombie?) starting with test plan 
 - support browsing without logging in
 - analytics
-- Footer with about & help
-- Details on a tree: submit -> save, enter should submit
 - Fix activity when edit tree field
-- remove box when not editing, make it the size of the screen
-- error message on 404 (branch, tree)
 - support server upgrade without relogging
-- mocha/zombie unit tests 
 - internationalization js
-- restify?
-- sass, less
-- hapi, promise
 - good logging system e.g. logfmt, bunyan
+
+Other ideas:
+- sass, less
+- hapi, promise, async
+- restify?
 
 Done textree:
 - Start from Social network
@@ -281,6 +288,9 @@ Done textree:
 - increase branch name field
 - remove logs
 - about & help pages
+- full tree loaded & not textedit enabled by default (smooth reading experience)
+- show branches small menu (“+” to add new branch) 
+- text edit with edit button
 
 Done learning/setup:
 - Installed jshint plugin in Sublime, configured it

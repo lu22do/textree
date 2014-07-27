@@ -22,7 +22,7 @@
 
     <textarea id="texteditor<%= branch.depth %>" class="form-control" style="height: 100px"></textarea>
 
-    <% if (branch.author.accountId == loggedAccountId && branch.parent) { %>
+    <% if (branch.author.accountId === loggedAccountId && branch.parent) { %>
     <div class="btn-group-sm"  style="float: left; margin-top: 10px;">
       <a class="btn btn-default" id="delete_branch_button<%= branch.depth %>">Delete this branch</a>
     </div>
@@ -122,18 +122,19 @@
     <span id="save_ok<%= branch.depth %>" style="display: none;" class="glyphicon glyphicon-ok-circle"></span>
 
     <!-- Edit icon -->
+    <% if (branch.author.accountId === loggedAccountId) { %>
     <a id="edit<%= branch.depth %>" style="display: none;" href="#" role="button" data-toggle="tooltip" data-placement="right" title="Edit this branch's tile and text">
       <span class="glyphicon glyphicon-edit"></span>
     </a>
-
-    <% if (readingMode != 'branch_by_branch') { %>
+    <% } %>
 
     <!-- Branches icon -->
+    <% if (readingMode != 'branch_by_branch') { %>
     <a id="show_branches<%= branch.depth %>" style="display: none;" href="#" role="button" data-toggle="tooltip" data-placement="right" title="Show child branches">
       <span class="glyphicon glyphicon-tree-conifer"></span>
     </a>
-
     <% } %>
+
   </div>
 </div>
 

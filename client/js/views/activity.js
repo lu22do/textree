@@ -28,22 +28,24 @@ define(['TextreeView', 'text!templates/activity.html'], function(TextreeView, ac
 
       switch(act.get('type')) {
         case 'TreeCreated':
-          text += '"<a href="#tree/' + id + '">' + name + '</a>" tree created';
+          text += '"<a href="#treedetails/' + id + '">' + name + '</a>" tree created';
           break;
         case 'TreeDeleted':
           text += '"' + name + '" tree deleted';
           break;
+        case 'TreeUpdated':
+          text += '"<a href="#treedetails/' + id + '">' + name + '</a>" tree details updated';
+          break;
         case 'BranchCreated':
-          text += '"<a href="#branch/' + id + '">' + name + '</a>" branch of "<a href="#treedetails/' + 
-            id2 + '">' + name2 + '</a>" tree created';
+          // text += '"<a href="#branch/' + id + '">' + name + '</a>" branch of "<a href="#tree/' + id2 + '">' + name2 + '</a>" tree created';
+          text += '"' + name + '" branch of "<a href="#tree/' + id2 + '">' + name2 + '</a>" tree created';
           break;
         case 'BranchUpdated':
-          text += '"<a href="#branch/' + id + '">' + name + '</a>" branch of "<a href="#treedetails/' + 
-            id2 + '">' + name2 + '</a>" tree updated';
+          // text += '"<a href="#branch/' + id + '">' + name + '</a>" branch of "<a href="#tree/' + id2 + '">' + name2 + '</a>" tree updated';
+          text += '"' + name + '" branch of "<a href="#tree/' + id2 + '">' + name2 + '</a>" tree updated';
           break;
         case 'BranchDeleted':
-          text += '"' + name + '" branch of "<a href="#treedetails/' + 
-            id2 + '">' + name2 + '</a>" tree deleted';
+          text += '"' + name + '" branch of "<a href="#tree/' + id2 + '">' + name2 + '</a>" tree deleted';
           break;
       }
       $(this.el).html(_.template(activityTemplate, {activity: text}));

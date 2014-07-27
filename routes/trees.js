@@ -74,8 +74,14 @@ module.exports = function(app, models) {
 
     models.Account.findById(accountId, function(account) {
       models.Tree.findById(treeId, function(tree) {
+        if (!tree.author.accountId.equals(accountId)) {
+          res.send(405); // 'not allowed'
+          return;
+        }
         models.Tree.updateTree(tree._id, {$set: update}, function(/*err*/) {
-          models.Account.createActivity(account, 'TreeUpdated', tree.name, tree._id, null, null, function(/*err*/) {
+
+          var name = req.body.name ? req.body.name : tree.name;
+          models.Account.createActivity(account, 'TreeUpdated', name, tree._id, null, null, function(/*err*/) {
             res.send(200);
           });
         });
@@ -106,7 +112,7 @@ module.exports = function(app, models) {
 
         models.Account.removeTree(account, treeId, function(err) {
           if (err) {
-            res.send(500);
+            res.send(405); // 'not allowed'
             return;
           }
 

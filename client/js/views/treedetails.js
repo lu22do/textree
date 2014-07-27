@@ -36,6 +36,14 @@ define(['TextreeView', 'views/popup', 'text!templates/treedetails.html'],
         $('#continuous_button').button('toggle');
         $('#branch_by_branch_button').button('toggle');
       }
+
+      if (this.model.get('author').accountId !== this.router.loggedAccount._id) {
+        if (this.model.get('readingMode') === 'branch_by_branch') {
+          $('#continuous_button').addClass('disabled');
+        } else {
+          $('#branch_by_branch_button').addClass('disabled');        
+        }
+      }
     },
 
     render: function() {
@@ -72,7 +80,7 @@ define(['TextreeView', 'views/popup', 'text!templates/treedetails.html'],
 //            console.log('update success');
           },
           error: function() {
-            alert('Could not create tree');
+            alert('Could not update name!');
           }
         }
       );  
@@ -108,7 +116,7 @@ define(['TextreeView', 'views/popup', 'text!templates/treedetails.html'],
           success: function() {
           },
           error: function() {
-            alert('Could not create tree');
+            alert('Could not update description!');
           }
         }
       );  
@@ -126,12 +134,12 @@ define(['TextreeView', 'views/popup', 'text!templates/treedetails.html'],
       }
       
       if (!readingMode) {
-        alert('No readingMode!');
+        // alert('No readingMode!');
         return;
       }
 
       if (readingMode == this.model.get('readingMode')) {
-        alert('ReadingMode not modified!');
+        // alert('ReadingMode not modified!');
         return;
       }
 
@@ -146,7 +154,7 @@ define(['TextreeView', 'views/popup', 'text!templates/treedetails.html'],
 //            console.log('update success');
           },
           error: function() {
-            alert('Could not update tree');
+            alert('Could not update readingMode!');
           }
         }
       );  

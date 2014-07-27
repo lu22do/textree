@@ -232,8 +232,10 @@ module.exports = function(app, config, mongoose, nodemailer) {
   };
 
   var removeTree = function(account, treeId, cb) {
-    if (null === account.trees) return;
-
+    if (null === account.trees) {
+      return;
+    }
+    
     var found = false;
 
     for (var i = 0; i < account.trees.length; i++) {

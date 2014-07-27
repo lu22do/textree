@@ -1,5 +1,6 @@
 
 module.exports = function(app, models) {
+
   app.get('/api/branches/:id', function(req, res) {
     models.Tree.findBranch(req.params.id, function(branch) {
       if (!branch) {
@@ -90,10 +91,31 @@ module.exports = function(app, models) {
 
     models.Account.findById(accountId, function(account) {
       models.Tree.findBranch(branchId, function(branch) {
+        if (!branch.author.accountId.equals(accountId)) {
+          res.send(405); // 'not allowed'
+          return;
+        }
+
         models.Tree.findById(branch.tree, function(tree) {
-          models.Tree.updateBranch(branchId, req.body, function(/*err*/) {
-            models.Tree.updateTree(tree._id, {$set: {updateDate: new Date()}}, function(/*err*/) {
-              models.Account.createActivity(account, 'BranchUpdated', branch.title, branch._id, 
+          if (!tree) {
+            res.send(500);
+            return;
+          }
+
+          models.Tree.updateBranch(branchId, req.body, function(err) {
+            if (err) {
+              res.send(500);
+              return;
+            }
+
+            models.Tree.updateTree(tree._id, {$set: {updateDate: new Date()}}, function(err) {
+              if (err) {
+                res.send(500);
+                return;
+              }
+
+              var title = req.body.title ? req.body.title : branch.title;
+              models.Account.createActivity(account, 'BranchUpdated', title, branch._id, 
                                             tree.name, tree._id, function(/*err*/) {
                 res.send(200);
               });
@@ -115,6 +137,10 @@ module.exports = function(app, models) {
  
     models.Account.findById(accountId, function(account) { 
       models.Tree.findBranch(branchId, function(branch) {
+        if (!branch.author.accountId.equals(accountId)) {
+          res.send(405); // 'not allowed'
+          return;
+        }
         models.Tree.findById(branch.tree, function(tree) {
           models.Tree.deleteBranch(tree, branchId, false, function(err) {
             if (err) {
