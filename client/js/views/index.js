@@ -1,5 +1,7 @@
-define(['TextreeView', 'text!templates/index.html', 'views/activity', 'views/treelist', 'models/Activity'], 
-       function(TextreeView, indexTemplate, ActivityView, TreeListView, Activity) {
+define(['TextreeView', 'text!templates/index.html', 'views/activity', 'views/treelist', 'views/visualizer', 
+        'models/Activity', 'models/Tree'], 
+       function(TextreeView, indexTemplate, ActivityView, TreeListView, VisualizerView, Activity, Tree) {
+
   var indexView = TextreeView.extend({
     el: $('#content'),
     
@@ -62,6 +64,12 @@ define(['TextreeView', 'text!templates/index.html', 'views/activity', 'views/tre
         withAuthor: true,
         complete: false
       });
+
+      var model = new Tree({id: '52c95ed1d8dfc4b313000008'});
+      new VisualizerView({el: $('#mypaper'),
+                          model: model,
+                          router: this}).render();
+      model.fetch();
     }
   });
 
