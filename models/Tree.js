@@ -247,6 +247,67 @@ module.exports = function(app, config, mongoose) {
     });
   };
 
+  // Returns hierarchy as a recursive object in the format
+  // {
+  //   id: "52c95ed1d8dfc4b313000007",
+  //   title: null,
+  //   children: [ {...}, ... ]
+  // }
+  var getHierarchy = function(branchId, callback) {
+    var res = {id: branchId};
+    var count = 0;
+    var done = false;
+
+    function insert(obj, doc) {
+      if (obj.id.toString() === doc._id.toString()) {
+        obj.title = doc.title;
+        obj.children = [];
+        for (var i = 0; i < doc.children.length; i++) {
+          obj.children[i] = {};
+          obj.children[i].id = doc.children[i];
+        } 
+        return true;
+      }
+
+      if (obj.children) {
+        for (var i = 0; i < obj.children.length; i++) {
+          if (insert(obj.children[i], doc)) {
+            return true;
+          }
+        }        
+      }
+      return false;
+    }
+
+    function _getHierarchy(err, doc) {
+      if (done) {
+        return;
+      }
+
+      if (err) {
+        done = true;
+        callback(err);
+        return;
+      }
+
+      insert(res, doc);
+
+      count--;
+
+      for (var i = 0; i < doc.children.length; i++) {
+        count++;
+        Branch.findOne({_id: doc.children[i]}, {}, {lean: true}, _getHierarchy);
+      }
+
+      if (count === 0) {
+        callback(undefined, res);
+      }
+    };
+
+    count++;
+    Branch.findOne({_id: branchId}, {}, {lean: true}, _getHierarchy);
+  };
+
   return {
     createTree: createTree,
     findById: findById,
@@ -258,6 +319,7 @@ module.exports = function(app, config, mongoose) {
     deleteBranch: deleteBranch,
     findBranch: findBranch,
     findBranches: findBranches,
+    getHierarchy: getHierarchy,
     Tree: Tree
   };
 };

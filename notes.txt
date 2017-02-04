@@ -59,6 +59,9 @@ merge:
  git merge <branch>
 delete:
  git branch -d <branch>
+pull:
+ git fetch origin <branch>
+ git checkout <branch>
 
 publication
 -----------

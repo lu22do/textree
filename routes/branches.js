@@ -33,6 +33,16 @@ module.exports = function(app, models) {
     });
   });
 
+  app.get('/api/branches/hierarchy/:id', function(req, res) {
+    models.Tree.getHierarchy(req.params.id, function(err, hierarchy) {
+      if (err) {
+        res.send(500);
+        return;
+      }
+      res.send(hierarchy);
+    });
+  });
+
   app.post('/api/branches', function(req, res) {
     var accountId = req.session.accountId;
 
